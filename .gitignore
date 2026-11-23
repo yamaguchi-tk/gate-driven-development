@@ -1,0 +1,19 @@
+# GDD ランタイム状態。session id / ホーム絶対パスを含み、リポジトリへ載せない。
+# 2026-08-21: `git add -A` でこれらが tracked 化し PR 差分へ混入した（T-30 Attempt 3 H-1）。
+# アンカー（`/.claude/`）にはしない。末尾 `/` はディレクトリ名の完全一致なので
+# `.claude-plugin/` 等を巻き込まず、非アンカーのほうが任意深さの混入も覆える
+# （T-30 Attempt 5 R-3 で実測。アンカー化は見返り 0 で被覆だけを狭めていた）。
+.claude/
+.gdd/
+
+# Serena のローカル設定。ホーム絶対パスを含み、リポジトリへ載せない。
+# 2026-09-03: merge conflict 解決時の `git add -A` で PR 差分へ混入した（PR #24）。
+.serena/
+
+# GDD raw task steering は branch-only artifact（main に含めない）。
+# repo-level learned-patterns は docs/learned-patterns.md（.steering/ の外）に置くため、
+# .steering/ に例外は設けない。
+.steering/*/
+
+# macOS Finder のメタデータ。2026-10-01: `git add plugins` で PR 差分へ 2 回混入した（#262 とその後続の PR）。
+.DS_Store

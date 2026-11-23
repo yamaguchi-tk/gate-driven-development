@@ -1,0 +1,4 @@
+interface:
+  display_name: "GDD Dev"
+  short_description: "Start formal Gate-Driven Development workflow"
+  default_prompt: "Use $gdd-dev to start GDD for this change."

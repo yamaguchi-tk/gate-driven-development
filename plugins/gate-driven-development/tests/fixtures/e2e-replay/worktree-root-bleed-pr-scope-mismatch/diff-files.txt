@@ -1,0 +1,2 @@
+.steering/20260605-example-dns-task/state.md
+plugins/gate-driven-development/skills/gdd-dev/SKILL.md

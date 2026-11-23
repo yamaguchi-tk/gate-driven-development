@@ -1,0 +1,18 @@
+{
+  "name": "gate-driven-development",
+  "metadata": {
+    "description": "方向性を決めたら AI が完走する軽量オーケストレーター GDD（Gate-Driven Development）の plugin（Claude Code / Codex / Cursor 対応）"
+  },
+  "owner": {
+    "name": "yamaguchi-tk",
+    "email": "377032+yamaguchi-tk@users.noreply.github.com"
+  },
+  "plugins": [
+    {
+      "name": "gate-driven-development",
+      "description": "方向性を決めたら AI が完走する軽量オーケストレーター。要件整理→人間確認→設計→TDD→実装→レビュー→PR を自動ゲート付きで一気通貫。中断・再開も state machine で正確にルーティング。",
+      "source": "./plugins/gate-driven-development",
+      "category": "development"
+    }
+  ]
+}

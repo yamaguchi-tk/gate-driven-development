@@ -1,0 +1,10 @@
+{
+  "scenario": "pr-review-followup-post-fix-refresh-missing",
+  "runner": "lint-pr-review-followup-state",
+  "expected_status": "fail",
+  "path": "state.md",
+  "expected_reason_contains": [
+    "post-fix fresh review evidence",
+    "post-fix fresh checks evidence"
+  ]
+}

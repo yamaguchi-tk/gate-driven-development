@@ -1,0 +1,26 @@
+{
+  "case_id": "active-gdd-plan-vs-superpowers",
+  "conversation": [
+    {
+      "role": "user",
+      "text": "synthetic:session-01 ここでGDDで計画してって言わないとsuperpowersを使おうとする"
+    },
+    {
+      "role": "user",
+      "text": "その改善案を計画して"
+    }
+  ],
+  "context": {
+    "active_gdd_marker": true,
+    "superpowers_enabled": true
+  },
+  "expected": {
+    "primary": "gdd",
+    "route_contains": "gate-driven-development:gdd-status",
+    "must_not_route": [
+      "superpowers:writing-plans",
+      "superpowers:executing-plans"
+    ],
+    "requires_status_or_resume": true
+  }
+}

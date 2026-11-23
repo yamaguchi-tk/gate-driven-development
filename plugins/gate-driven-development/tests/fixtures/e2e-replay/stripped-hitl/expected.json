@@ -1,0 +1,10 @@
+{
+  "scenario": "stripped-hitl",
+  "runner": "lint-hitl-display-integrity",
+  "expected_status": "fail",
+  "path": "final-hitl.md",
+  "expected_reason_contains": [
+    "Final HITL Display Integrity",
+    "ズレ確認"
+  ]
+}

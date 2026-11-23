@@ -1,0 +1,1156 @@
+{
+  "skill_name": "gate-driven-development",
+  "evals": [
+    {
+      "id": 1,
+      "category": "entry",
+      "priority": "critical",
+      "required": true,
+      "prompt": "/gdd-dev API と DB スキーマの両方に手を入れる複数ファイルの機能追加を始めたい。まず要件と設計を固めてから実装に進みたい。/.steering/ はまだ無い。",
+      "expected_output": "`gdd-brainstorming` が `gdd-using-git-worktrees` helper を使って dedicated branch / worktree を準備し、その worktree 側 `.steering/YYYYMMDD-*` に `requirements.md` と lightweight `design.md` skeleton と `state.md` を作る。`requirements.md` には実装方針まで入り、`state.md` には `Requirements Review Status=pending`, `Design Review Status=pending`, `Human Check Status=pending`, `Resume From=gdd-brainstorming` が入る。そのあと `gdd-requirements-gating` に進む案内があり、`.cursor/plans/*.plan.md` はデフォルトでは作らない。",
+      "files": [],
+      "expectations": [
+        "mentions_worktree_preparation",
+        "requirements_md_includes_implementation_policy",
+        "design_md_lightweight_skeleton_or_gate_status",
+        "mentions_requirements_gating"
+      ]
+    },
+    {
+      "id": 2,
+      "category": "entry",
+      "priority": "critical",
+      "required": true,
+      "prompt": "`/gdd-dev` だけ実行して、追加の説明はまだ書いていない。この場合どう扱う？",
+      "expected_output": "entry intent を `ambiguous` と判断し、fail-closed で停止する。`参照した正本`、`停止理由`、`次の1アクション` と、`<gdd-stop>` の後の `## 👤 次にすること` を返し、`新規開始` か `再開` かを確認する。勝手に既存 steering を resume したり新しい `.steering/...` を作ったりしない。",
+      "files": [],
+      "expectations": [
+        "entry_intent_ambiguous",
+        "mentions_fail_closed",
+        "confirm_new_vs_resume",
+        "next_single_action_guidance"
+      ]
+    },
+    {
+      "id": 3,
+      "category": "entry",
+      "priority": "high",
+      "required": true,
+      "prompt": "複数ファイルにまたがる機能追加をしたい。まだ `/gdd-dev` は始めず、まず相談だけで要件から整理したい。",
+      "expected_output": "`gdd-pre-workflow-brainstorming` が相談レーンとして働き、会話で要件や選択肢を整理する。`.steering/...` や `.cursor/plans/*.plan.md` は作らず、まだ `/gdd-dev` には入らない。",
+      "files": [],
+      "expectations": [
+        "mentions_pre_workflow_brainstorming",
+        "no_steering_or_cursor_plans_artifacts",
+        "no_gdd_handoff_yet"
+      ]
+    },
+    {
+      "id": 4,
+      "category": "entry",
+      "priority": "critical",
+      "required": true,
+      "prompt": "未完了の build 用 worktree が 1 つあるが、今回は別件として `/gdd-dev 通知バッチの失敗を Slack に送る機能を追加したい` を始めたい。",
+      "expected_output": "resume cue の無い具体的な task 説明なので entry intent を `new` と判断する。既存 non-terminal steering を resume せず、新しい dedicated branch / worktree と `.steering/YYYYMMDD-short-title/` を作って `gdd-brainstorming` から始める。",
+      "files": [],
+      "expectations": [
+        "entry_intent_new",
+        "no_resume_existing_steering",
+        "new_worktree_or_steering_created"
+      ]
+    },
+    {
+      "id": 5,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "active worktree 側 `.steering/20260313-auth-fix/` には `requirements.md` と `state.md` があり、tasklist.md はまだ無い。`Resume From=human-check-waiting` のまま止まっている。/gdd-dev で続きを再開したい。",
+      "expected_output": "planning candidate を 1 つに解決し、active worktree 側 `state.md` の `Resume From=human-check-waiting` を正本として扱う。新しい steering は作らず、人間承認待ちまたはその直前の修正に戻る。",
+      "files": [],
+      "expectations": [
+        "mentions_human_check_waiting",
+        "active_worktree_design_md_canonical",
+        "no_rebuild_new_steering"
+      ]
+    },
+    {
+      "id": 6,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "active worktree 側 `tasklist.md` の `Next Action` は gdd-implementation-gating。/gdd-dev で続きを再開したい。",
+      "expected_output": "build candidate を 1 つに解決し、active worktree 側 `tasklist.md` の `Next Action=gdd-implementation-gating` を正本として handoff する。設計の壁打ちからやり直さない。",
+      "files": [],
+      "expectations": [
+        "mentions_implementation_gating",
+        "active_worktree_tasklist_md_canonical",
+        "no_restart_from_plan_brainstorming"
+      ]
+    },
+    {
+      "id": 7,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "resume 候補の worktree が 2 つあり、どちらも同じ優先順位の build candidate に見える。`/gdd-dev 続きから再開したい` とだけ伝えた場合はどうする？",
+      "expected_output": "resume cue があるので entry intent を `resume` と判断するが、active steering を一意に決められないので fail-closed で停止する。候補一覧、`参照した正本`、`停止理由`、`次の1アクション` と、`<gdd-stop>` の後の `## 👤 次にすること` を返し、どの steering を再開するか明示指定を要求する。勝手に 1 つ選ばず、新規 steering も作らない。",
+      "files": [],
+      "expectations": [
+        "entry_intent_resume",
+        "active_steering_not_unique",
+        "mentions_fail_closed",
+        "explicit_steering_resume_choice_required",
+        "resume_candidates_or_selection_guidance",
+        "no_create_new_steering"
+      ]
+    },
+    {
+      "id": 8,
+      "category": "resume",
+      "priority": "high",
+      "required": true,
+      "prompt": "worktree candidate は見つからないが、repo root に旧 contract の `.steering/20260301-auth-fix/` だけがあり、これを再開したい。",
+      "expected_output": "`gdd-brainstorming` は legacy root candidate を migration 対象として 1 つに解決し、`gdd-using-git-worktrees` helper で dedicated branch / worktree を準備する。root 側 `.steering/...` は worktree 側へ 1 回だけコピーし、その後の canonical artifact は worktree 側に切り替える。",
+      "files": [],
+      "expectations": [
+        "legacy_root_or_migration",
+        "mentions_using_git_worktrees_lite",
+        "canonical_artifacts_switch_to_worktree"
+      ]
+    },
+    {
+      "id": 9,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "gdd-brainstorming で requirements.md は固まったから、人間確認は今回は省略して gdd-design-gating に進めたい。Human Check Status は waived にしていい？",
+      "expected_output": "human check は必須 gate であり、`Human Check Status` に `waived` は使えないと説明する。`Human Check Status` の許容値は `pending` / `changes_requested` / `approved` だけで、`gdd-design-gating` に入る前提は `Requirements Review Status=approved` と `Human Check Status=approved` が揃うことだと案内する。",
+      "files": [],
+      "expectations": [
+        "human_check_status_allowed_values",
+        "human_check_status_no_waived",
+        "human_check_required_gate",
+        "human_check_approved_prerequisite_for_design_gating"
+      ]
+    },
+    {
+      "id": 10,
+      "category": "planning",
+      "priority": "high",
+      "required": false,
+      "prompt": "human check 済みの requirements.md があり、AI が design.md を具体化する gdd-design-gating では誰がレビューする？",
+      "expected_output": "gdd-design-gating では `gdd-planning-reviewer` を常時起動し、`gdd-security-reviewer` は `references/reviewer-selection.md` に従って必要時だけ選ぶと案内する。approved な requirements.md と lightweight design skeleton をもとにした detailed design gate であり、selection は `Planning Reviewer Selection` として `state.md` に残すと説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_workflow_design_reviewer",
+        "design_gating_applicable_reviewer_selection",
+        "reviewer_selection_record_mentioned",
+        "lightweight_skeleton_or_detailed_design_gate"
+      ]
+    },
+    {
+      "id": 11,
+      "category": "planning",
+      "priority": "high",
+      "required": false,
+      "prompt": "gdd-design-gating は通っていて Human Check Status は approved、Resume From は gdd-task-breakdown。ここから gdd-task-breakdown を正常に終えたら何が正本になって、どんな初期状態になる？",
+      "expected_output": "gdd-task-breakdown は active worktree 側 `tasklist.md` を canonical format で初期化し、`Current Task` / `Pending Tasks` / `Completed Tasks` を揃え、reviewer status を `pending` で作り、`Next Action=gdd-test-driven-development` に設定する。",
+      "files": [],
+      "expectations": [
+        "tasklist_task_sections_mentioned",
+        "reviewer_status_initialized_pending",
+        "next_action_test_driven_development_lite"
+      ]
+    },
+    {
+      "id": 12,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "human check と gdd-design-gating は通っていて gdd-task-breakdown も終わっている。ここから最初の task を実装レビューまで進める標準フローを確認したい。",
+      "expected_output": "標準フローとして `gdd-test-driven-development -> gdd-subagent-driven-implementation -> gdd-implementation-gating` の順に進むと案内する。`gdd-implementation-gating` では `gdd-implementation-reviewer` を常時起動し、`gdd-security-reviewer` は `references/reviewer-selection.md` に従って必要時だけ選ぶ formal gate だと説明する。selection は `Implementation Reviewer Selection` として `tasklist.md` に残す。",
+      "files": [],
+      "expectations": [
+        "mentions_test_driven_development_lite",
+        "mentions_subagent_driven_implementation_lite",
+        "mentions_implementation_gating",
+        "implementation_gating_applicable_reviewer_selection",
+        "implementation_reviewer_selection_recorded"
+      ]
+    },
+    {
+      "id": 13,
+      "category": "planning",
+      "priority": "high",
+      "required": true,
+      "prompt": "gdd-task-breakdown の途中で、scope は変えずに受入条件を 1 つ追加したくなった。requirements 側に戻して human check を取り直したい。",
+      "expected_output": "gdd-task-breakdown が `human_recheck_required` を検知し、`human-check-waiting` に差し戻す。`Requirements Review Status=approved`, `Design Review Status=pending`, `Human Check Status=pending`, `Resume From=human-check-waiting`, `Next Action=human-check-waiting` が設定され、planning 全体をやり直さずに再度 human check を取る旨が案内される。",
+      "files": [],
+      "expectations": [
+        "mentions_human_recheck_required",
+        "rollback_to_human_check_waiting",
+        "human_check_redo_mentioned"
+      ]
+    },
+    {
+      "id": 14,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "gdd-subagent-driven-implementation の途中で、requirements は変えなくてよいが detailed design の分解だけ直したいと分かった。どこに戻す？",
+      "expected_output": "`design_detail_only` として `gdd-design-gating` に戻す。`Design Review Status=changes_requested`, `Human Check Status=approved`, `Resume From=gdd-design-gating`, `Next Action=gdd-design-gating` を記録し、human check は取り直さない。",
+      "files": [],
+      "expectations": [
+        "mentions_design_detail_only",
+        "return_routing_to_design_gating",
+        "human_check_not_redone"
+      ]
+    },
+    {
+      "id": 15,
+      "category": "build",
+      "priority": "high",
+      "required": false,
+      "prompt": "gdd-requesting-code-review で auth と .env 周りの変更を security review したい。required external security evidence の代わりではなく追加チェックとして扱いたい。",
+      "expected_output": "明示要求の companion review と判断し、`gdd-security-reviewer` を使う案内を出す。`gdd-implementation-gating` を置き換えず、advisory lane なので formal な `Next Action` / `Review Status` は変えない。required external security evidence の代替ではないと明示する。",
+      "files": [],
+      "expectations": [
+        "mentions_workflow_requesting_code_review",
+        "mentions_workflow_security_reviewer",
+        "security_evidence_not_replaced_by_companion_review",
+        "formal_next_action_review_status_unchanged"
+      ]
+    },
+    {
+      "id": 16,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "gate-driven-development の formal workflow 文脈で、generic に「コードレビューして」とだけ来た review 依頼はどこに入れる？",
+      "expected_output": "generic な review 依頼と判断し、formal gate の `gdd-implementation-gating` を案内する。`gdd-requesting-code-review` を自動で使わない。",
+      "files": [],
+      "expectations": [
+        "mentions_implementation_gating",
+        "no_generic_route_to_requesting_code_review"
+      ]
+    },
+    {
+      "id": 17,
+      "category": "completion",
+      "priority": "critical",
+      "required": true,
+      "prompt": "TypeScript の実装と package.json の更新が終わった。gdd-completion-check で done に進めていい？",
+      "expected_output": "gdd-completion-check は `Verification` の固定 schema（`method` / `status` / `evidence` / `notes`）を満たしたうえで required external security evidence を確認し、さらに `gdd-completion-reviewer` による包括レビューを行う。今回の変更なら `security_evidence:code` と `security_evidence:sca` の evidence が無ければ done に進めないと案内する。",
+      "files": [],
+      "expectations": [
+        "mentions_completion_check",
+        "mentions_workflow_comprehensive_reviewer",
+        "verification_schema_fields_required",
+        "mentions_security_evidence_code",
+        "mentions_security_evidence_sca"
+      ]
+    },
+    {
+      "id": 18,
+      "category": "external-prereq",
+      "priority": "critical",
+      "required": true,
+      "prompt": "TypeScript と package.json を変更したが、external verifier hook が未導入か、evidence writer が動かず `security_evidence:code` / `security_evidence:sca` を書けない。gdd-completion-check で done に進める？",
+      "expected_output": "required evidence は `security_evidence:code` と `security_evidence:sca` だが、external verifier hook が evidence を書けないので外部前提不足として fail-closed で停止する。`N/A` や `unsupported` に逃がさず、done を拒否して不足条件を具体化する。このケースは `Next Action=gdd-completion-check` のまま不足前提のチェックリストを返し、`gdd-systematic-debugging` へ誤送しない。",
+      "files": [],
+      "expectations": [
+        "external_security_evidence_contract",
+        "mentions_both_security_evidence_code_and_sca",
+        "fail_closed_or_blocked_from_done",
+        "next_action_stays_completion_check",
+        "no_misroute_to_systematic_debugging_lite"
+      ]
+    },
+    {
+      "id": 19,
+      "category": "external-prereq",
+      "priority": "critical",
+      "required": true,
+      "prompt": "この環境には同名の gdd-design-reviewer や command が別配布物から既に入っていて、どちらが解決されるか分からない。/gdd-dev を使って続けたい。",
+      "expected_output": "same-name ambient asset 衝突で plugin 側 asset を deterministic に解決できない unsupported configuration だと説明し、fail-closed で停止する。衝突解消前は `/gdd-dev` をそのまま続行せず、同名 asset の無効化・退避・改名などで衝突を解消してから再実行するよう案内する。",
+      "files": [],
+      "expectations": [
+        "same_name_ambient_asset_or_conflict",
+        "unsupported_or_nondeterministic_resolution",
+        "mentions_fail_closed",
+        "no_gdd_until_conflict_resolved"
+      ]
+    },
+    {
+      "id": 20,
+      "category": "external-prereq",
+      "priority": "critical",
+      "required": true,
+      "prompt": "/gdd-dev で新規 task を始めたいが、この環境は git repo ではないか git worktree が使えない。どう進める？",
+      "expected_output": "`gdd-using-git-worktrees` helper が git / worktree capability 不足を検知し、fail-closed で停止する。通常ディレクトリへの自動フォールバックはしない。どこで詰まったかを示し、`次の1アクション` として復旧手順を返す。",
+      "files": [],
+      "expectations": [
+        "mentions_using_git_worktrees_lite",
+        "git_or_worktree_capability_missing",
+        "mentions_fail_closed",
+        "recovery_steps_or_next_single_action"
+      ]
+    },
+    {
+      "id": 21,
+      "category": "planning",
+      "priority": "normal",
+      "required": false,
+      "prompt": "gdd-brainstorming で requirements.md と lightweight design skeleton はできた。human check の前に誰が見る？",
+      "expected_output": "`gdd-requirements-gating` では `gdd-planning-reviewer` を常時起動し、`gdd-security-reviewer` は `references/reviewer-selection.md` に従って必要時だけ選ぶと案内し、その selection を `Planning Reviewer Selection` として `state.md` に残したうえで human check へ進むと説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_requirements_gating",
+        "mentions_workflow_requirements_reviewer",
+        "requirements_gating_applicable_reviewer_selection",
+        "reviewer_selection_record_mentioned",
+        "human_check_is_prerequisite_stage"
+      ]
+    },
+    {
+      "id": 22,
+      "category": "completion",
+      "priority": "high",
+      "required": false,
+      "prompt": "gdd-implementation-gating は通ったし task も全部終わった。done の前に最後は誰が横断的に見る？",
+      "expected_output": "`gdd-completion-check` の中で `gdd-completion-reviewer` が最後の包括レビューを行うと説明し、task 単位 review の取りこぼしを done 前に確認する案内を出す。",
+      "files": [],
+      "expectations": [
+        "mentions_completion_check",
+        "mentions_workflow_comprehensive_reviewer",
+        "task_level_review_gaps_before_done"
+      ]
+    },
+    {
+      "id": 23,
+      "category": "planning",
+      "priority": "high",
+      "required": true,
+      "prompt": "実装を進めていたら、前提が崩れて要求や計画をまとめ直さないと無理だと分かった。狭い再承認では済まない場合はどう戻す？",
+      "expected_output": "`planning_rework_required` と判断し、`gdd-brainstorming` に戻す。`Requirements Review Status=pending`, `Design Review Status=pending`, `Human Check Status=pending`, `Resume From=gdd-brainstorming` を記録し、必要なら requirements reviewer と human check をやり直すと説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_planning_rework_required",
+        "mentions_plan_brainstorming",
+        "mentions_requirements_review_status"
+      ]
+    },
+    {
+      "id": 24,
+      "category": "planning",
+      "priority": "normal",
+      "required": false,
+      "prompt": "/gdd-dev Next.js 15 と Prisma を使う新機能追加を要件から始めたい。最新の推奨に沿って requirements と design を作りたい。",
+      "expected_output": "`gdd-brainstorming` が、対象技術の最新の公式ドキュメント / release notes / migration guide を `tech-docs-searcher` などで確認してから `requirements.md` と lightweight `design.md` skeleton を作ると説明する。確認結果は `Latest Tech Context` として記録し、確認できない点は `Open Questions` に落とす。",
+      "files": [],
+      "expectations": [
+        "mentions_plan_brainstorming",
+        "official_docs_or_release_notes_check",
+        "mentions_latest_tech_context",
+        "mentions_open_questions"
+      ]
+    },
+    {
+      "id": 25,
+      "category": "planning",
+      "priority": "normal",
+      "required": false,
+      "prompt": "human check 済み requirements.md があり、gdd-design-gating に進む。利用技術は Next.js 15 と Prisma で、最新の breaking changes や推奨 API を設計に反映したい。もし再確認の結果 requirements や implementation policy まで変える必要が出たらどう扱う？",
+      "expected_output": "`gdd-design-gating` が detailed design を固める前に対象技術の最新情報を `tech-docs-searcher` などで再確認し、`Latest Tech Context` / `External References` と設計への影響を `design.md` に残すと説明する。最新情報の再確認で requirements や implementation policy を変える必要が出た場合は、silent change せず `human_recheck_required` または `planning_rework_required` に戻す。",
+      "files": [],
+      "expectations": [
+        "mentions_design_gating",
+        "official_docs_or_release_notes_recheck",
+        "mentions_latest_tech_context_or_external_refs",
+        "mentions_human_recheck_or_planning_rework"
+      ]
+    },
+    {
+      "id": 26,
+      "category": "planning",
+      "priority": "high",
+      "required": true,
+      "prompt": "Human Check Status は approved で、gdd-design-gating に進める状態。ここから `human_recheck_required` / `planning_rework_required` / `design_detail_only` や fail-closed 条件が出ない限り、AI は phase ごとにまた人間確認を待つ？",
+      "expected_output": "No. human check は通常 1 回の人間 gate で、承認後は AI が `gdd-design-gating`、`gdd-task-breakdown`、`gdd-test-driven-development`、`gdd-subagent-driven-implementation`、`gdd-implementation-gating`、`gdd-completion-check` を phase ごとの追加人間承認なしで進める。人間へ戻すのは `human_recheck_required` / `planning_rework_required` / `design_detail_only` または fail-closed 条件のときだけと説明する。",
+      "files": [],
+      "expectations": [
+        "post_human_check_autonomous_phases",
+        "mentions_design_gating",
+        "mentions_task_breakdown",
+        "mentions_test_driven_development_lite",
+        "mentions_subagent_driven_implementation_lite",
+        "mentions_implementation_gating",
+        "mentions_completion_check",
+        "mentions_human_recheck_or_planning_rework",
+        "mentions_design_detail_only",
+        "mentions_fail_closed"
+      ]
+    },
+    {
+      "id": 27,
+      "category": "build",
+      "priority": "critical",
+      "required": true,
+      "prompt": "gdd-implementation-gating で selected reviewer の 1 人が medium 指摘を出した。current task に関係がある内容だが、急ぐので `waived` で受容して次に進めたい。formal gate では許される？",
+      "expected_output": "No. `waived` は `Implementation Reviewer Selection` 上 non-applicable と判断した reviewer にだけ使い、selected reviewer の real medium issue を `waived` で流さない。medium が実害クラスでなければ、差し戻さず `state.md` の `## Advisory Findings (Impl-Gate)` に記録して `approved` にし、PR 本文に全件を書く。実害クラスなら `changes_requested` で `gdd-systematic-debugging` に戻すと説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_implementation_gating",
+        "implementation_reviewer_selection_recorded",
+        "implementation_gating_medium_not_waived"
+      ]
+    },
+    {
+      "id": 28,
+      "category": "completion",
+      "priority": "critical",
+      "required": true,
+      "prompt": "gdd-completion-check で `Verification` は埋まっているが、evidence が抽象的で、AC の検証が弱いテストギャップも残っている。あとで人間がざっと見る前提で `done` にしていい？",
+      "expected_output": "No. `gdd-completion-check` は human check 後の最後の formal gate で、後続の人手 spot-check を前提にしない。証跡不足と、AC の検証が無い・弱い有意なテストギャップは evidence の不足として blocking issue なので、`gdd-completion-reviewer` で拾ったうえで `done` に進めず差し戻すと説明する（assert の判別力だけの指摘なら advisory）。",
+      "files": [],
+      "expectations": [
+        "mentions_completion_check",
+        "mentions_workflow_comprehensive_reviewer",
+        "completion_check_evidence_or_test_gap_blocking",
+        "fail_closed_or_blocked_from_done"
+      ]
+    },
+    {
+      "id": 29,
+      "category": "build",
+      "priority": "critical",
+      "required": true,
+      "prompt": "gdd-implementation-gating が `changes_requested` になって、High 1 件と Medium 2 件が返った。1 件は rollback / recovery の抜けで、残り 1 件は命名の不整合。まずユーザーにどれから直すか確認して止まるべき？",
+      "expected_output": "No. `changes_requested` はユーザー確認待ちの停止点ではなく自律 remediation loop の開始点なので、まず `gdd-systematic-debugging` に戻して High を最優先し、次に rollback / recovery のような `ops-blocking medium` を `gdd-subagent-driven-implementation` で直してから `gdd-implementation-gating` を再実行する。ユーザーへ戻すのは `design_detail_only` / `human_recheck_required` / `planning_rework_required` や non-local な判断が必要なときだけと説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_implementation_gating",
+        "mentions_subagent_driven_implementation_lite",
+        "changes_requested_self_remediation",
+        "priority_high_over_medium",
+        "ops_blocking_or_ops_impact_medium",
+        "mentions_human_recheck_or_planning_rework"
+      ]
+    },
+    {
+      "id": 30,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "gdd-implementation-gating の medium 指摘で、required verification evidence が取れなくなる変更だと言われ、category は実害クラスだった。この medium は cosmetic なものを直した後でいい？",
+      "expected_output": "No. 実害クラスの medium は差し戻しの対象で、required verification evidence に関わる medium は `ops-blocking medium` なので、cosmetic な medium より先に自律 remediation の優先対象として扱う（cosmetic な medium は advisory で、この loop では直さない）。`gdd-systematic-debugging` で `implementation_fix_only` かを見て、scope 内なら `gdd-subagent-driven-implementation` で直してから `gdd-implementation-gating` を再実行すると説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_implementation_gating",
+        "mentions_subagent_driven_implementation_lite",
+        "ops_blocking_or_ops_impact_medium",
+        "priority_high_over_medium"
+      ]
+    },
+    {
+      "id": 31,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "同じ Current Task で gdd-implementation-gating が 2 回連続 `changes_requested` になり、High は減らず同じ root cause が再発している。もう一度 `implementation_fix_only` で回し続ける？",
+      "expected_output": "No. `gdd-systematic-debugging` は前回との差分を比較し、`worklog.md` に根本原因と今回の route 判断を書く。3 回目の blind `implementation_fix_only` は避け、`design_detail_only` / `human_recheck_required` / `planning_rework_required` にエスカレートするか、route を決められなければ fail-closed で停止すると説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_systematic_debugging_lite",
+        "worklog_root_cause_and_route_decision",
+        "stop_blind_implementation_fix_only_loops",
+        "mentions_fail_closed"
+      ]
+    },
+    {
+      "id": 32,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "gate-driven-development の build 中。`Current Task` は retryable queue consumer の timeout 再試行。`pnpm test -- --runInBand queue-consumer.spec.ts` が失敗して `expected 202 got 500` になった。修正に入る前に、この test failure をどう整理する？",
+      "expected_output": "real test failure なので `gdd-test-failure-debug-pack` を優先し、`Current Task`, `Failure Command`, `Reproduction`, `Expected`, `Actual`, `Evidence`, `Root Cause Hypothesis`, `Fix Plan`, `Worklog Decision`, `Handoff to gdd-systematic-debugging` を含む structured debug pack を返す。`Next Action` はこの skill 自身では更新せず、routing は `gdd-systematic-debugging` に委譲すると説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_test_failure_debug_pack",
+        "debug_pack_includes_current_task_and_failure_command",
+        "debug_pack_separates_expected_and_actual",
+        "next_action_update_delegated_to_systematic_debugging"
+      ]
+    },
+    {
+      "id": 33,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "`gdd-subagent-driven-implementation` で GREEN を進めていたが、`pytest tests/test_scheduler.py -k retry_backoff` が flaky っぽく落ちる。最初に何を返すべき？",
+      "expected_output": "real failing test として `gdd-test-failure-debug-pack` を優先し、再現条件、`Failure Surface`, `Evidence`, `Root Cause Hypothesis`, `Confidence`, `Workaround`, `Fix Plan` を整理する。env / timing 起因の疑いも failure surface に残し、最後は `gdd-systematic-debugging` に handoff して routing を確定すると説明する。",
+      "files": [],
+      "expectations": [
+        "debug_pack_reproduction_and_failure_surface",
+        "debug_pack_evidence_hypothesis_confidence",
+        "debug_pack_workaround_vs_fix_plan",
+        "handoff_to_systematic_debugging_lite"
+      ]
+    },
+    {
+      "id": 34,
+      "category": "build",
+      "priority": "normal",
+      "required": false,
+      "prompt": "`Current Task` は同じままで failing test が 2 回続いた。`npm test -- auth-session.spec.ts` の failure を整理して、必要なら `worklog.md` にも残したい。",
+      "expected_output": "`gdd-test-failure-debug-pack` の structured output に加え、`Worklog Decision` を `yes|no + reason` で返す。再発や non-obvious root cause があるなら `worklog.md` 更新可否を判断しつつ、最終 routing は `gdd-systematic-debugging` に委譲すると説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_test_failure_debug_pack",
+        "debug_pack_worklog_decision_with_reason",
+        "worklog_update_decision_on_recurrence"
+      ]
+    },
+    {
+      "id": 35,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "current task で `references/reviewer-selection.md`, `references/state-machine.md`, `skills/gdd-implementation-gating/SKILL.md` を触った。gdd-implementation-gating では誰を必須にする？",
+      "expected_output": "`gdd-implementation-reviewer` は常時必須で、今回は reviewer selection / state machine / gate semantics を変えているので契約・spec 面も `gdd-implementation-reviewer` がカバーすると説明する。その他 specialist reviewer は `references/reviewer-selection.md` に従って必要時だけ選び、selection は `Implementation Reviewer Selection` として `tasklist.md` に残すと案内する。",
+      "files": [],
+      "expectations": [
+        "workflow_spec_reviewer_required_trigger",
+        "implementation_reviewer_selection_recorded",
+        "implementation_gating_applicable_reviewer_selection"
+      ]
+    },
+    {
+      "id": 36,
+      "category": "completion",
+      "priority": "high",
+      "required": false,
+      "prompt": "gdd-completion-check 前だが `Planning Reviewer Selection` を残していなかった。あとで人が見ればいい前提で `done` にしていい？",
+      "expected_output": "No. `Planning Reviewer Selection` は gdd-completion-check の確認対象で、欠落や scope と合わない selection は blocking issue だと説明する。`Implementation Reviewer Selection` は per-task 一時状態で completion 時には監査しないが、全 task が `Completed Tasks` に到達していること（各 task が implementation-gating を通過した事実）が監査根拠になる。`gdd-completion-reviewer` が selection の妥当性も見るため、`Planning Reviewer Selection` の記録を埋めずに `done` へ進めないと案内する。",
+      "files": [],
+      "expectations": [
+        "mentions_completion_check",
+        "mentions_workflow_comprehensive_reviewer",
+        "reviewer_selection_record_mentioned"
+      ]
+    },
+    {
+      "id": 37,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "active worktree 側 `state.md` は `Requirements Review Status=approved`, `Design Review Status=approved`, `Human Check Status=approved`, `Resume From=gdd-task-breakdown`。`/gdd-dev 続きから再開したい。今の state 説明だけで止まらず、そのまま進めて。`",
+      "expected_output": "explicit な `/gdd-dev` run では `.claude/gdd-dev.local.md` と Stop hook で same session の自走継続を行い、non-terminal な `Resume From=gdd-task-breakdown` は stop 理由ではないと説明する。`gdd-task-breakdown` を実行して `tasklist.md` を更新し、`Current Task` / `Pending Tasks` / `Completed Tasks` を揃えたうえで `Next Action=gdd-test-driven-development` に進め、status summary だけで turn を閉じない。terminal / blocked で止まるときだけ `gdd-stop` marker を使う。",
+      "files": [],
+      "expectations": [
+        "non_terminal_no_summary_only_stop",
+        "task_breakdown_executes_tasklist_update",
+        "tasklist_task_sections_mentioned",
+        "next_action_test_driven_development_lite",
+        "mentions_gdd_stop_marker"
+      ]
+    },
+    {
+      "id": 38,
+      "category": "external-prereq",
+      "priority": "high",
+      "required": false,
+      "prompt": "active な `/gdd-dev` run 中に `gdd-completion-check` まで来たが、external verifier hook が required evidence を書けない。この same session の自走継続はどう止まる？",
+      "expected_output": "外部前提不足なので `blocked` として止まり、`Next Action=gdd-completion-check` のまま不足前提のチェックリストを返すと説明する。Stop hook loop を外すため、最後の assistant text block に `<gdd-stop reason=\"blocked\">...</gdd-stop>` を含め、`参照した正本` / `停止理由` / `次の1アクション` と、`<gdd-stop>` の後の `## 👤 次にすること` も返す。",
+      "files": [],
+      "expectations": [
+        "mentions_gdd_stop_marker",
+        "gdd_stop_reason_blocked",
+        "next_action_stays_completion_check",
+        "next_single_action_guidance"
+      ]
+    },
+    {
+      "id": 39,
+      "category": "external-prereq",
+      "priority": "high",
+      "required": false,
+      "prompt": "Cursor では `bash scripts/install-cursor-links.sh` でこの plugin の command / skill / agent を `~/.cursor/...` に symlink 展開している。`~/.cursor/plugins/gate-driven-development/cursor-links.tsv` を見ると、同名 asset は current plugin asset への alias だけだった。これは same-name ambient asset conflict として `/gdd-dev` を止めるべき？",
+      "expected_output": "No. `install-cursor-links.sh` が作り `cursor-links.tsv` で current plugin asset への alias と確認できる plugin-managed Cursor symlink は同一 asset とみなし、same-name ambient asset conflict に含めないと説明する。別実体の同名 asset で plugin 側 asset を deterministic に解決できない場合だけ unsupported configuration / fail-closed にすると説明し、このケースでは `/gdd-dev` を止めない。",
+      "files": [],
+      "expectations": [
+        "plugin_managed_cursor_symlink_not_conflict",
+        "cursor_links_install_script_or_tsv",
+        "distinct_duplicate_asset_only_as_conflict"
+      ]
+    },
+    {
+      "id": 40,
+      "category": "resume",
+      "priority": "high",
+      "required": false,
+      "prompt": "active worktree 側 `.steering/.../requirements.md`, `design.md`, `tasklist.md` は揃っているが、`adr.md` はまだ無い。/gdd-dev で続きを進めたい。`adr.md` が無いので blocked にするべき？",
+      "expected_output": "No. `adr.md` は optional な decision log であり、canonical artifact や routing source、gate 条件にはしないと説明する。`adr.md` が無いことだけを理由に fail-closed / blocked にせず、routing は引き続き `state.md` または `tasklist.md` の state を使うと説明する。",
+      "files": [],
+      "expectations": [
+        "adr_md_optional",
+        "adr_md_not_canonical_or_routing",
+        "adr_md_absence_not_blocking"
+      ]
+    },
+    {
+      "id": 41,
+      "category": "build",
+      "priority": "normal",
+      "required": false,
+      "prompt": "gdd-design-gating や実装の途中で、RDS をやめて DynamoDB を採用する判断と、Redis 案を却下した理由を後から参照できるように steering に残したい。どう書く？",
+      "expected_output": "active worktree 側 `.steering/.../adr.md` を任意の decision log として作成または追記し、`Context` / `Decision` / `Why` / `Consequences` を残すと説明する。`adr.md` は optional であり、gate 条件や canonical artifact にはしないとも説明する。",
+      "files": [],
+      "expectations": [
+        "adr_md_optional",
+        "adr_md_not_canonical_or_routing",
+        "adr_md_record_template_fields"
+      ]
+    },
+    {
+      "id": 42,
+      "category": "entry",
+      "priority": "high",
+      "required": false,
+      "prompt": "通知まわりをいい感じに整理したいけど、まだ `/gdd-dev` は始めず相談だけしたい。失敗通知を誰に出すか、どこまで自動化するかもふわっとしている。",
+      "expected_output": "`gdd-pre-workflow-brainstorming` の相談レーンとして扱い、artifact を作らずに、曖昧な依頼を少なくとも目的・スコープ・受入条件の言葉へ言い換えて整理する。まだ `/gdd-dev` に handoff しない。",
+      "files": [],
+      "expectations": [
+        "mentions_pre_workflow_brainstorming",
+        "no_steering_or_cursor_plans_artifacts",
+        "no_gdd_handoff_yet",
+        "reframes_vague_request_into_goal_scope_acceptance"
+      ]
+    },
+    {
+      "id": 43,
+      "category": "planning",
+      "priority": "high",
+      "required": false,
+      "prompt": "/gdd-dev 監査ログ検索 API の要件を固めたい。空条件検索、権限なし、タイムアウト時の扱いがまだ曖昧なので、初版の requirements.md にはどう書くべき？",
+      "expected_output": "`gdd-brainstorming` が、独立した必須 `Examples` セクションを増やすのではなく、曖昧な受入条件や境界ケースを `受入条件` または `検証ヒント` に入力/出力/期待挙動の代表例として書いて固定する案内を出す。",
+      "files": [],
+      "expectations": [
+        "mentions_plan_brainstorming",
+        "no_mandatory_examples_section",
+        "acceptance_or_verification_hints_with_io_examples"
+      ]
+    },
+    {
+      "id": 44,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "active worktree 側 `tasklist.md` の `Next Action` は gdd-implementation-gating。レビュー差し戻しで認証方式の実装方針変更が必要になった。同じ task をこの worktree のまま続けたいので、`/gdd-dev レビューで実装方針変更になった。設計を見直して進めたい。` と伝えたらどう扱う？",
+      "expected_output": "single active build candidate と review / re-entry cue から entry intent を `resume` と判断し、新しい worktree や `.steering/...` を作らない。同じ active worktree を再利用し、自然言語だけで `Next Action` を上書きせず、まず `gdd-systematic-debugging` で `implementation_fix_only` / `design_detail_only` / `human_recheck_required` / `planning_rework_required` を切り分けると説明する。host の Plan mode には逃がさない。",
+      "files": [],
+      "expectations": [
+        "entry_intent_resume",
+        "active_worktree_tasklist_md_canonical",
+        "mentions_systematic_debugging_lite",
+        "mentions_design_detail_only",
+        "mentions_human_recheck_or_planning_rework",
+        "no_create_new_steering",
+        "no_rebuild_new_steering"
+      ]
+    },
+    {
+      "id": 45,
+      "category": "resume",
+      "priority": "high",
+      "required": false,
+      "prompt": "active worktree 側 `state.md` の `Resume From` は human-check-waiting。前回のレビューで実装方針変更になった件を続けたい。`/gdd-dev レビューで実装方針変更になったので、この task を再開したい。` と伝えたらどう扱う？",
+      "expected_output": "review / re-entry cue から entry intent を `resume` と判断し、新しい worktree / `.steering/...` を作らず、active worktree 側 `state.md` の `Resume From=human-check-waiting` を正本として使う。自然言語だけで別 phase に飛ばず、人間再チェックの待ち状態をそのまま再開すると説明する。",
+      "files": [],
+      "expectations": [
+        "entry_intent_resume",
+        "active_worktree_design_md_canonical",
+        "mentions_human_check_waiting",
+        "no_create_new_steering",
+        "no_rebuild_new_steering"
+      ]
+    },
+    {
+      "id": 46,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "/gdd-dev Slack freeform v2 を要件から固めたい。Claude が直接投稿する経路をやめて、`FINAL_RESULT_JSON` を runtime が配送する形へ変える。初版の requirements.md / lightweight design skeleton では何を独立見出しで書くべき？",
+      "expected_output": "`gdd-brainstorming` が、generic な `実装方針` や `リスク` に埋めずに `Behavior Change Summary`, `Route / Ownership Matrix`, `Sensitive Data / Masking Policy`, `Human Check Questions` を requirements.md と lightweight design skeleton の両方で用意すると説明する。route / owner 変更や masking policy を独立見出しで見せるべきだと案内する。",
+      "files": [],
+      "expectations": [
+        "mentions_plan_brainstorming",
+        "mentions_behavior_change_summary",
+        "mentions_route_ownership_matrix",
+        "mentions_sensitive_data_masking_policy",
+        "mentions_human_check_questions"
+      ]
+    },
+    {
+      "id": 47,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "`gdd-requirements-gating` まで来た。final output の owner を Claude から runtime に変える案で、prompt に Slack Event Proof を入れるかと、どこで redact / reject するかがまだ未確定。このまま `human-check-waiting` に進める？",
+      "expected_output": "No. `gdd-requirements-gating` は blocking な `Open Questions` を残したまま `human-check-waiting` に進めず、human handoff には `承認ポイント` を必須にすると説明する。route / ownership / secret handling / masking / rollout / rollback が scope にあるなら、その承認事項を yes/no で列挙してから human check に出すと案内する。",
+      "files": [],
+      "expectations": [
+        "mentions_requirements_gating",
+        "mentions_human_check_waiting",
+        "mentions_human_approval_items",
+        "mentions_open_questions",
+        "blocks_human_check_on_open_questions"
+      ]
+    },
+    {
+      "id": 48,
+      "category": "planning",
+      "priority": "high",
+      "required": false,
+      "prompt": "human check で承認された requirements では Claude が最終返信 owner だったが、gdd-design-gating で runtime-owned delivery に変え、`FINAL_RESULT_JSON.body` の redact を runtime 側責務にしたいと分かった。`design_detail_only` で閉じてよい？",
+      "expected_output": "No. `gdd-design-gating` は final output owner、delivery path、masking enforcement point の変更を human 承認済み policy の変更として扱い、`design_detail_only` に閉じず `human_recheck_required` または `planning_rework_required` を検討すると説明する。`Behavior Change Summary` / `Route / Ownership Matrix` / `Sensitive Data / Masking Policy` を requirements と照合して route を決めると案内する。",
+      "files": [],
+      "expectations": [
+        "mentions_design_gating",
+        "mentions_behavior_change_summary",
+        "mentions_route_ownership_matrix",
+        "mentions_sensitive_data_masking_policy",
+        "mentions_human_recheck_or_planning_rework"
+      ]
+    },
+    {
+      "id": 49,
+      "category": "planning",
+      "priority": "high",
+      "required": false,
+      "prompt": "requirements/design で prompt contract、`FINAL_RESULT_JSON` の output contract、runtime-owned delivery、prompt への sensitive value 投入、rollback flag の順序を変える task をレビューする。reviewer-selection 的には誰を選ぶ？",
+      "expected_output": "`references/reviewer-selection.md` に従い、requirements/design の両方で `gdd-planning-reviewer`（feasibility 含む）と `gdd-security-reviewer` を選ぶべきだと説明する。route / ownership / prompt-output contract / masking / rollout が trigger だと案内する。",
+      "files": [],
+      "expectations": [
+        "mentions_workflow_requirements_feasibility_reviewer",
+        "mentions_workflow_requirements_security_reviewer",
+        "mentions_workflow_design_feasibility_reviewer",
+        "mentions_workflow_design_security_reviewer"
+      ]
+    },
+    {
+      "id": 50,
+      "category": "completion",
+      "priority": "high",
+      "required": false,
+      "prompt": "gdd-completion-check の直前。steering には runtime-owned delivery と runtime 側 sanitize が書かれているが、実 diff はまだ Claude から直接配送しているかもしれない。最後の包括レビューでは何を照合する？",
+      "expected_output": "`gdd-completion-check` の `gdd-completion-reviewer` は、`Route / Ownership Matrix` と実 diff が一致しているか、`Sensitive Data / Masking Policy` と実 diff が一致しているか、rollout guard / rollback 手順に実装漏れがないかを最後に横断確認すると説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_completion_check",
+        "mentions_workflow_comprehensive_reviewer",
+        "comprehensive_checks_route_matrix_vs_diff",
+        "comprehensive_checks_masking_policy_vs_diff",
+        "comprehensive_checks_rollout_rollback_gaps"
+      ]
+    },
+    {
+      "id": 51,
+      "category": "planning",
+      "priority": "high",
+      "required": true,
+      "prompt": "human check の承認ポイントを作成する際、各ポイントにはどのような構造が必要か？また、末尾に何を置くべきか？",
+      "expected_output": "各承認ポイントには **背景**（なぜこの判断が必要か）と **変更前 → 変更後**（何がどう変わるか）を含める。末尾に **方向性承認** を置き、AI の自走範囲を事前に合意する。人間がコンテキストを遡らずに判断できる粒度にする。",
+      "files": [],
+      "expectations": [
+        "approval_point_has_background",
+        "approval_point_has_before_after",
+        "approval_point_has_direction_approval"
+      ]
+    },
+    {
+      "id": 52,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "human check で承認を得た後、`state.md` に何を記録するか？ `Approved Direction` とは何か？",
+      "expected_output": "human check 承認後、`state.md` に `Approved Direction` を記録する。方向性の 1 行要約、自走範囲（方向性と矛盾しない限り AI が自律判断してよい範囲）、人間に戻す条件（満たせない見込み / AC・scope を削る・弱める / 信頼境界を緩める）を含む。`Approved Direction` は routing source にはせず、`gdd-systematic-debugging` が自走範囲の判定に使う補助コンテキスト。",
+      "files": [],
+      "expectations": [
+        "mentions_approved_direction",
+        "approved_direction_in_state_md",
+        "approved_direction_has_scope",
+        "approved_direction_not_routing_source"
+      ]
+    },
+    {
+      "id": 53,
+      "category": "build",
+      "priority": "critical",
+      "required": true,
+      "prompt": "E2E テストで env 未反映 → 契約変更 → packaging 不備と問題が連鎖的に見つかった。毎回 human check に戻すべきか？ `Approved Direction` が `state.md` にある前提で判断せよ。",
+      "expected_output": "`Approved Direction` の自走範囲内であれば human check に戻さず AI が自律判断する（E2E Discovery Loop）。自走条件: (1) 元の AC を壊さない、(2) `Approved Direction` の自走範囲と矛盾しない、(3) セキュリティ要件の新規発生でない、(4) AC の根本的な追加・削除でない。条件を満たせば `design_detail_only` で reviewer は通すが human check には戻さない。",
+      "files": [],
+      "expectations": [
+        "mentions_e2e_discovery_loop",
+        "mentions_approved_direction_scope",
+        "e2e_self_run_conditions",
+        "design_detail_only_without_human_check"
+      ]
+    },
+    {
+      "id": 54,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "E2E Discovery Loop の自走中に `design_detail_only` が 4 回目になった。Scope Drift Guard はどう動くか？",
+      "expected_output": "同一 steering 内で `design_detail_only` が 3 回を超えた場合、Scope Drift Guard が発動する。worklog に累積変更の要約を書き、方向性との整合を再確認する。ただし発動 = 即座に human check ではなく、方向性と矛盾がなければ worklog に理由を残して自走を継続してよい。累積変更ファイル数が初期スキャンの 3 倍を超えた場合も同様。",
+      "files": [],
+      "expectations": [
+        "mentions_scope_drift_guard",
+        "scope_drift_guard_threshold_3",
+        "scope_drift_guard_not_immediate_human_check",
+        "scope_drift_guard_worklog_required"
+      ]
+    },
+    {
+      "id": 55,
+      "category": "build",
+      "priority": "high",
+      "required": true,
+      "prompt": "E2E Discovery Loop 自走中に、セキュリティ要件の新規発生が判明した。この場合はどうするか？",
+      "expected_output": "セキュリティ要件の新規発生は E2E Discovery Loop の自走条件を満たさないため、human check に戻す。`human_recheck_required` として `human-check-waiting` に routing する。`Approved Direction` の自走範囲に含まれていても、セキュリティ要件の新規発生は例外として人間判断を求める。",
+      "files": [],
+      "expectations": [
+        "e2e_security_breaks_self_run",
+        "human_recheck_required_for_security",
+        "mentions_human_check_waiting"
+      ]
+    },
+    {
+      "id": 56,
+      "category": "planning",
+      "priority": "high",
+      "required": false,
+      "prompt": "brainstorming の Problem Discovery と Options Exploration はどのタイミングで行い、何を出力するか？",
+      "expected_output": "Problem Discovery は brainstorming の Step 9 で行い、既存コード・環境の具体的事実を確認する（ファイル構造、依存関係、既存テスト、CI 設定など）。Options Exploration は Step 10 で行い、Problem Discovery の事実をもとに候補案を比較する。出力は承認ポイントの背景として使われ、Summary Brief の判断材料に反映される。",
+      "files": [],
+      "expectations": [
+        "mentions_problem_discovery",
+        "mentions_options_exploration",
+        "problem_discovery_checks_existing_code",
+        "options_exploration_compares_candidates"
+      ]
+    },
+    {
+      "id": 57,
+      "category": "model",
+      "priority": "high",
+      "required": false,
+      "prompt": "gdd-brainstorming（要件整理）と gdd-test-failure-debug-pack（テスト失敗の情報収集）で使うモデルはそれぞれ何が適切か？判断根拠も説明せよ。",
+      "expected_output": "gdd-model-routing に従い、gdd-brainstorming（要件整理）は曖昧さが大きく最終判断を含むため重いモデル（Opus）を使う。gdd-test-failure-debug-pack は情報収集・ログ取得が中心で判断の重さが軽いため、Sonnet で十分と説明する。起動時の固定表や判断の優先順位に言及がある。",
+      "files": [],
+      "expectations": [
+        "model_routing_heavy_for_planning",
+        "model_routing_light_for_info_gathering",
+        "model_routing_mentions_fixed_table"
+      ]
+    },
+    {
+      "id": 58,
+      "category": "model",
+      "priority": "medium",
+      "required": false,
+      "prompt": "Cursor 環境で gdd-systematic-debugging の計画を行うとき、reasoning.effort はどのレベルに設定すべきか？",
+      "expected_output": "gdd-model-routing の Cursor 環境ルールに従い、gdd-systematic-debugging の計画は標準では `GPT-5.5 + reasoning.effort=low` に設定し、undocumented step / large working-set / security-sensitive / final review signal がある場合だけ `GPT-5.5 + reasoning.effort=high` に上げる。xhigh は使わない。references/cursor.md を参照する旨がある。",
+      "files": [],
+      "expectations": [
+        "model_routing_cursor_high_escalation_for_debugging",
+        "model_routing_mentions_cursor_md"
+      ]
+    },
+    {
+      "id": 59,
+      "category": "review",
+      "priority": "high",
+      "required": false,
+      "prompt": "「この PR をレビューして」と言われた。PR には Terraform と API コードの変更が混在している。gdd-pr-review としてどう進めるか？",
+      "expected_output": "gdd-pr-review が起動し、Terraform はコードレビューとして扱う。docs-only ではないため重いモデルでレビューする。findings-first で報告し、重要度順に指摘を並べる。PR 作成前の review -> fix -> re-review サイクルにも対応する旨を説明する。",
+      "files": [],
+      "expectations": [
+        "pr_review_terraform_as_code",
+        "pr_review_heavy_model_for_code",
+        "pr_review_findings_first"
+      ]
+    },
+    {
+      "id": 60,
+      "category": "review",
+      "priority": "medium",
+      "required": false,
+      "prompt": "gdd-requesting-code-review で companion review を依頼した後、フィードバックが返ってきた。このフィードバックを処理するにはどの skill を使うか？",
+      "expected_output": "gdd-receiving-code-review を使う。この skill は advisory review feedback を受けて、まず findings を現在の diff に対して検証してから修正に進む。盲目的にレビューコメントを受け入れず、valid な issue だけを debugging や design-gating に routing する。",
+      "files": [],
+      "expectations": [
+        "receiving_review_validates_findings",
+        "receiving_review_does_not_blindly_accept",
+        "receiving_review_routes_valid_issues"
+      ]
+    },
+    {
+      "id": 61,
+      "category": "refactor",
+      "priority": "high",
+      "required": false,
+      "prompt": "実装完了後に「内部のコード構造を整理したい。挙動は変えない」と言われた。どの skill を使い、何に注意すべきか？",
+      "expected_output": "gdd-refactor-planning を使う。挙動を変えないリファクタだけを計画する skill で、approved な requirements / design / tasklist を前提にする。user-visible behavior が変わる場合、AC を動かす場合、route / ownership の承認済み policy を変える場合はこの skill ではなく /gdd-dev で始める。リファクタと機能追加が混在する場合の判断基準にも言及する。",
+      "files": [],
+      "expectations": [
+        "refactor_planning_behavior_preserving",
+        "refactor_planning_not_for_behavior_change",
+        "refactor_planning_returns_to_impl_lane"
+      ]
+    },
+    {
+      "id": 62,
+      "category": "status",
+      "priority": "medium",
+      "required": false,
+      "prompt": "「今どこにいるか分からない」と言われた。active な steering がある前提で、gdd-status は何を表示するか？",
+      "expected_output": "gdd-status が起動し、active な .steering/ ディレクトリから state.md の Gate Status（Resume From, review status 群）、requirements.md の Summary Brief の一言、tasklist.md の Current Task / Pending Tasks / Next Action を読んで 1 画面で表示する。次に何をすべきかを明確にする。",
+      "files": [],
+      "expectations": [
+        "status_reads_state_md",
+        "status_shows_gate_status",
+        "status_shows_next_action"
+      ]
+    },
+    {
+      "id": 63,
+      "category": "entry",
+      "priority": "high",
+      "required": false,
+      "prompt": "「README の typo を 1 箇所直したい」と言われた。Task Size はどう判定されるか？ゲートは通るのか？",
+      "expected_output": "Task Size は trivial と判定される。trivial は typo やコメント修正など 1 行レベルの変更で、behavior change がなく、gate / reviewer / artifact をすべてスキップする。直接 commit して done。trivial から quick/standard への upgrade は可能だが、逆の downgrade はしない。",
+      "files": [],
+      "expectations": [
+        "task_sizing_criteria",
+        "trivial_skips_gates"
+      ]
+    },
+    {
+      "id": 64,
+      "category": "entry",
+      "priority": "high",
+      "required": false,
+      "prompt": "brainstorming で Task Size を quick と standard のどちらにするか迷っている。判断基準は何か？",
+      "expected_output": "quick は変更ファイル数 1〜5、route/ownership/security の変更なし、外部 API の新規呼び出しなし。standard は変更ファイル数 6 以上、または route/ownership/security/外部 API の変更がある場合。quick では security reviewer を省略し、design.md の必須見出しも減る。standard では full reviewer set（security reviewer 含む）が必要。upgrade のみ可能で、standard → quick の downgrade はしない。",
+      "files": [],
+      "expectations": [
+        "task_sizing_criteria",
+        "quick_vs_standard_difference",
+        "task_sizing_affects_reviewer_count",
+        "task_sizing_upgrade_only"
+      ]
+    },
+    {
+      "id": 65,
+      "category": "planning",
+      "priority": "medium",
+      "required": false,
+      "prompt": "Task Size が quick で進めていたが、実装中に認証ミドルウェアの変更が必要と判明した。Task Size はどうなるか？",
+      "expected_output": "認証ミドルウェアは security-sensitive な変更であるため、Task Size を quick から standard に upgrade する。standard では security reviewer が必須になり、design.md の必須見出しも増える。downgrade（standard → quick）は許可しない。upgrade は実装中でも可能で、midstream upgrade として扱う。",
+      "files": [],
+      "expectations": [
+        "task_sizing_criteria",
+        "task_sizing_affects_reviewer_count",
+        "task_sizing_upgrade_only"
+      ]
+    },
+    {
+      "id": 66,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "`.claude/gdd-dev.local.md` が active: true で、現在は実装中。ユーザーが「途中だけど、これも対応して。出力に新しい項目も追加して」と言った。どう扱う？",
+      "expected_output": "active GDD session の follow-up として host Plan mode に入らず分類する。出力項目追加は AC semantics / prompt-output contract の変更なので `requirements_amendment` または `human_recheck_required` に戻し、実装前に requirements.md / design.md / 必要なら adr.md に変更を記録する。既存 build route のまま ad hoc 実装しない。",
+      "files": [],
+      "expectations": [
+        "active_session_followup_classification",
+        "routes_to_requirements_amendment",
+        "no_host_plan_mode",
+        "records_requirements_design_or_adr_before_implementation"
+      ]
+    },
+    {
+      "id": 67,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "`.claude/gdd-dev.local.md` が active: true の状態で、ユーザーが「一旦 Plan にして整理して」と言った。どうする？",
+      "expected_output": "Plan mode には入らない。GDD が active なので `references/phase-progression.md` の Active Session Follow-up Classification で分類し、必要なら design_detail_only / requirements_amendment / human_recheck_required に route する。Plan mode は state machine と競合するため使わないと説明する。",
+      "files": [],
+      "expectations": [
+        "blocks_or_avoids_plan_mode",
+        "mentions_active_session_followup_classification",
+        "uses_gdd_route_instead"
+      ]
+    },
+    {
+      "id": 68,
+      "category": "review",
+      "priority": "high",
+      "required": true,
+      "prompt": "Human Check Status は approved。PR レビューで「allowlist を狭めて」と指摘された。既存 AC の security boundary を満たすための修正で、ユーザーは「PRに積んで」と言っている。再 human check する？",
+      "expected_output": "再 human check しない。既承認 AC 内の reviewer 指摘対応なので `implementation_fix_only` / `gdd-systematic-debugging` として扱い、state.md / tasklist.md / worklog.md のいずれかに Follow-up Classification の判断根拠を記録して修正を進める。",
+      "files": [],
+      "expectations": [
+        "no_repeat_human_check_for_reviewer_fix",
+        "routes_to_implementation_fix_only_or_debugging",
+        "records_classification_rationale"
+      ]
+    },
+    {
+      "id": 69,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "`.claude/gdd-dev.local.md` が `active: true` だが `session_id:` が空のまま Stop hook が動いた。どう扱う？",
+      "expected_output": "空の session_id は invalid active local session state として fail-closed にする。autonomous continuation は通常継続せず、`.steering/.../state.md` から `/gdd-dev` で resume するか、完了/破棄済みなら `.claude/gdd-dev.local.md` を削除するよう案内する。",
+      "files": [],
+      "expectations": [
+        "invalid_empty_session_id_fail_closed",
+        "no_autonomous_continuation",
+        "suggests_resume_or_delete_local_state"
+      ]
+    },
+    {
+      "id": 70,
+      "category": "completion",
+      "priority": "critical",
+      "required": true,
+      "prompt": "gdd-completion-check で `Implementation Gate Evidence Check` に引っかかり、Completed Tasks の `Reviewed by:` 行が 1 task 分だけ欠けていた。同じ task-id + 欠落項目で 2 回目の bounce になった。これは human recheck に上げるべき？",
+      "expected_output": "No. これは policy / scope 変更ではなく impl-gate の procedural blocker なので、`human_recheck_required` には上げない。`gdd-implementation-gating` を再実行するか、必要なら `gdd-systematic-debugging` で gate evidence の欠落原因を解消する。`Human Check Status=approved` は維持し、同じ blocker の繰り返しとしては route の見直しや gate evidence 生成手順の修正に寄せると説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_completion_check",
+        "mentions_implementation_gating",
+        "mentions_systematic_debugging_lite",
+        "human_check_not_redone",
+        "implementation_gate_evidence_stays_in_build_loop"
+      ]
+    },
+    {
+      "id": 71,
+      "category": "build",
+      "priority": "critical",
+      "required": true,
+      "prompt": "同じ Current Task で `changes_requested` が 5 回連続しているが、原因は毎回 `Reviewed by` 行の欠落や verification wording の不整合で、AC / scope / security boundary は変わっていない。この escape hatch でも human recheck に戻すべき？",
+      "expected_output": "No. procedural / evidence 整形の失敗だけなら `human_recheck_required` にはしない。`gdd-systematic-debugging` は policy-level ambiguity が無いことを確認したうえで、`gdd-implementation-gating` あるいは `gdd-completion-check` に対する route recalibration、記録手順の修正、必要なら fail-closed の `blocked` で止める。人間再承認に戻すのは policy / scope / ownership / security boundary / prompt-output contract が変わる場合だけと説明する。",
+      "files": [],
+      "expectations": [
+        "mentions_systematic_debugging_lite",
+        "mentions_implementation_gating",
+        "mentions_completion_check",
+        "human_check_not_redone",
+        "procedural_repetition_not_human_recheck"
+      ]
+    },
+    {
+      "id": 72,
+      "category": "completion",
+      "priority": "critical",
+      "required": true,
+      "prompt": "active worktree で同じ task を修正し終えた。`git status --porcelain` には `M src/notification-bot/app.py` と `?? .steering/20260510-inline-fix/state.md` が出ている。ユーザーは『PRにして』と言っている。この steering はどう扱う？",
+      "expected_output": "current task の `.steering/20260510-inline-fix/` は managed artifact なので、docs-only や untracked でも optional 扱いせず implementation diff と同じ PR に含めると説明する。`gdd-completion-check` の Branch Hygiene Pre-Flight で current task の steering を stage / commit 対象に含め、silent skip せずに `gh pr create` 前に回収すると案内する。",
+      "files": [],
+      "expectations": [
+        "mentions_completion_check",
+        "commits_current_task_steering_with_pr",
+        "no_skip_managed_steering_artifact"
+      ]
+    },
+    {
+      "id": 73,
+      "category": "entry",
+      "priority": "critical",
+      "required": true,
+      "prompt": "/gdd-dev で dedicated worktree は作れたが、project root 側にも `?? .steering/20260510-inline-fix/state.md` が残っている。active worktree 側にも同じ slug の `.steering/20260510-inline-fix/` がある。このまま続けてよい？",
+      "expected_output": "No. legacy migration でない root 側 `.steering/<slug>/` は root bleed / 置き去り artifact として扱い、fail-closed で停止する。どちらが canonical artifact かを確定し、必要なら worktree 側へ移してから続行する。root と worktree の両方を更新したまま進んだり、新しい steering をもう 1 つ作って曖昧さを吸収したりしない。",
+      "files": [],
+      "expectations": [
+        "mentions_using_git_worktrees_lite",
+        "root_same_slug_steering_detected",
+        "requires_migration_or_resolution_before_continue",
+        "no_create_new_steering"
+      ]
+    },
+    {
+      "id": 74,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "requirements.md の確認で human-check-waiting に止める。文章量が多いと承認が大変なので、どこまで出来ていて、人間が次に何をし、OK後に何が残るかだけを分かりやすく出してほしい。",
+      "expected_output": "human-check 出力には `現在地` を含め、`ここまで出来ていること`、`人間が今やること`、`OK 後に残る作業`、`残タスク` を state.md / tasklist.md / requirements.md / design.md を根拠に表示する。tasklist.md が未作成なら残タスクは捏造せず、承認後に task-breakdown で作成と書く。",
+      "files": [],
+      "expectations": [
+        "mentions_human_check_waiting",
+        "human_check_current_location"
+      ]
+    },
+    {
+      "id": 75,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "ユーザーが最初に書いた完了条件が brainstorm 中に refined / split / deferred された。HITL では requirements.md 全文ではなく、ズレるとまずい完了条件とテスト化の確認だけ見たい。",
+      "expected_output": "requirements.md には `Completion Condition Trace` と `Completion Testability Matrix` を残す。HITL では `完了条件の変換` と `テスト化確認` を出し、refined / split / deferred / dropped / added / unresolved のうち後戻りが大きい差分だけを `承認ポイント` に圧縮する。kept や unit test 全件一覧は原則出さない。",
+      "files": [],
+      "expectations": [
+        "hitl_completion_trace_visible",
+        "mentions_human_approval_items"
+      ]
+    },
+    {
+      "id": 76,
+      "category": "planning",
+      "priority": "critical",
+      "required": true,
+      "prompt": "採用する技術スタックが既存 repo 標準や vendor 公式統合とズレそう。HITL では依存関係一覧ではなく、作り方が違うと手戻りになる箇所だけ確認したい。",
+      "expected_output": "requirements.md には `Technology Stack Fit Matrix` と `Adopted Technology Stack Trace` を残す。HITL の `技術スタック確認` では、採用する技術スタック、公式統合との差分、既存 repo 標準からの逸脱、access method、credential backend、tenant 境界など後戻りが高い判断だけを露出する。",
+      "files": [],
+      "expectations": [
+        "hitl_technology_stack_visible",
+        "mentions_human_approval_items"
+      ]
+    },
+    {
+      "id": 77,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "Codex が `Error running remote compact task: unexpected status 503 Service Unavailable ... /backend-api/codex/responses/compact` で止まった。これは GDD 失敗として新規タスクにすべき？",
+      "expected_output": "これは `Codex compact 503` の host-level interruption であり workflow failure ではない。新規 task にせず、active steering を 1 件に絞って state.md / tasklist.md の正本から resume する。復帰時は `参照した正本`、`現在 phase`、`次の1アクション` を短く表示し、候補 0 件または複数なら fail-closed で止める。",
+      "files": [],
+      "expectations": [
+        "codex_compact_503_resume_cue",
+        "mentions_fail_closed"
+      ]
+    },
+    {
+      "id": 78,
+      "category": "resume",
+      "priority": "critical",
+      "required": true,
+      "prompt": "PR は既に default branch に merge 済み。ユーザーは同じ会話で『続きで追加実装して。既存 worktree を整理してから新しい worktree を切ってよい』と言っている。元 worktree には dirty diff と複数 `.steering/` がある。どう扱う？",
+      "expected_output": "merge 済み follow-up として same-session correction で元 worktree / 元 branch に追加実装しない。`gdd-using-git-worktrees` の Pre-Follow-up Hygiene Gate で既存 worktree の task id / branch / state / dirty diff / multi-steering contamination を整理対象として HITL に出し、元 steering は `done` のまま固定する。その後、非緊急なら new amendment、production bug / urgent regression なら Hotfix Lane として latest default branch から新しい worktree / branch を作り、`Origin PR` / `Origin Branch` / `Origin Merge Commit` / `Base Branch` を記録する。",
+      "files": [],
+      "expectations": [
+        "post_merge_followup_no_original_worktree_reuse",
+        "pre_followup_hygiene_gate",
+        "new_worktree_from_latest_default_branch",
+        "origin_trace_fields"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "scenario": "pr-review-followup-early-clean",
+  "runner": "lint-pr-review-followup-state",
+  "expected_status": "fail",
+  "path": "state.md",
+  "expected_reason_contains": [
+    "PR Review Follow-up",
+    "clean claim requires fresh review evidence",
+    "re-review request"
+  ]
+}

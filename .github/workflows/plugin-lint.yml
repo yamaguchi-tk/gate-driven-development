@@ -1,0 +1,39 @@
+name: plugin-lint
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+# 同じ PR の古い実行は取り消す。main への push は取り消さない（実行履歴を残す）
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  gdd-plugin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # version-not-consumed / review-log-present が origin/main との merge-base を引く
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+
+      # 版はローカルで全量が通った組み合わせ。pytest-xdist は plugin 直下の pytest.ini（--dist worksteal）が 3.2 以上を要求する
+      - name: Install Python test dependencies
+        run: python3 -m pip install pytest==9.1.1 pytest-xdist==3.8.0
+
+      - name: Run GDD plugin contract tests
+        run: python3 -m pytest plugins/gate-driven-development/tests/ -q -n auto
+
+      - name: Smoke test workflow plugin
+        run: bash plugins/gate-driven-development/tests/validate-plugin.sh

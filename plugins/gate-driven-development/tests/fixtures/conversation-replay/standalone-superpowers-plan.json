@@ -1,0 +1,21 @@
+{
+  "case_id": "standalone-superpowers-plan",
+  "conversation": [
+    {
+      "role": "user",
+      "text": "superpowersでplanを作って"
+    }
+  ],
+  "context": {
+    "active_gdd_marker": false,
+    "superpowers_enabled": true
+  },
+  "expected": {
+    "primary": "superpowers",
+    "route_contains": "superpowers:writing-plans",
+    "must_not_route": [
+      "gate-driven-development:gdd-status"
+    ],
+    "requires_status_or_resume": false
+  }
+}

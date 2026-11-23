@@ -1,0 +1,8 @@
+{
+  "runner": "lint-hitl-decision-quality",
+  "path": "hitl.md",
+  "expected_status": "fail",
+  "expected_reason_contains": [
+    "ambiguous internal phrase remains"
+  ]
+}

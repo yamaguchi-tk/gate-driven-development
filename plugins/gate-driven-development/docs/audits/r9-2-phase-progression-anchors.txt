@@ -1,0 +1,608 @@
+# anchors for references/phase-progression.md (base tree: /tmp/r9-2-base-tree/plugins/gate-driven-development)
+# set1_count=44
+# set2_count=3
+# set3_count=380
+# set4_count=83
+# set5_count=87
+## SET 1
+       # Root Stub for <root-name>
+     ## Verification History
+   ## Batch WIP Discard (ISO8601)
+   ## CI Partial Pass (YYYY-MM-DDTHH:MM:SSZ)
+   ## Hotfix Diverted (YYYY-MM-DDTHH:MM:SSZ)
+   ### Steering Archive / Scrub / 機密削除の規約（Fix X）
+   #### X-1: Scrub 許可範囲マトリクス（N2-d）
+   #### X-2: Origin Resolution Status の mutability 規約（N2-g）
+   #### X-3: Scrub 由来の sha1 prefix 変化への対応（N2-j）
+   #### X-4: Root Archive 時の Root Stub 保持（N2-m）
+# Phase Progression
+## Active Session Follow-up Classification
+## Autonomous Continuation
+## Batch Route Decisions (YYYY-MM-DDTHH:MM:SSZ)
+## Build Phase
+## Completion
+## Diff Routing（差し戻し先）
+## Express Path（quick express）
+## External Guardrails Inventory
+## External Verifier との共存
+## Implementation Review
+## Planning Phase
+## Post-Merge Same-Chat Boundary
+## Remediation
+## Route Decision (YYYY-MM-DDTHH:MM:SSZ)
+### Batch-Hotfix Bridge Contract（batch 中の Hotfix Lane 退避と手動 Hotfix 起動）
+### E2E Discovery Loop（E2E 発見ループ）
+### Escalation Decision Table
+### Express → standard 昇格
+### Express の遷移ルール
+### Express フロー
+### External Guardrails Inventory（W-5）
+### Merge Report Cleanup Trigger
+### Parallel Execution（並列実行）
+### Post-PR / Post-Merge Contract
+### Same-Session Correction Rule
+### Staging Verification（W-6）
+### batch_mixed Serialization Contract（state.md 並列書き込みの直列化）
+### gdd-brainstorming
+### gdd-design-gating
+### gdd-requirements-gating
+### human check
+#### Post-Done Correction Default
+#### Post-Merge Follow-up Worktree Policy
+## SET 2
+Step 0a
+Step 1
+step 4
+## SET 3
+ か 
+ が 
+ または 
+## Advisory Findings
+## Advisory Findings (Express Impl-Gate)
+## Origin Verification History (rehydrated)
+## Verification
+- なし
+.claude/
+.claude/gdd-dev.local.md
+.claude/settings.json
+.steering
+.steering/
+.steering/...
+.steering/.../
+.steering/.../adr.md
+/SKILL.md
+/gdd-dev
+/gdd-using-git-worktrees
+2026-04-08
+3 回
+<gdd-stop reason="blocked">
+<gdd-stop reason="done">
+<gdd-stop reason="human-check-waiting">
+<gdd-stop>
+<redacted>
+<status>
+<task-id>
+AC Verification
+ADR 起票
+Abandoned Hotfix Attempts
+Amendment of
+Approved Direction
+Attempts
+Autonomous Continuation
+Base Branch
+Batch Route Decisions
+Behavior Preservation Invariants
+Bounce Log
+Check Status
+Completed Tasks
+Cumulative Changed Files
+Current Task
+Decision
+Design Review Status
+Design Review Status=approved
+Design Review Status=pending
+Dockerfile
+Drift Review Required
+Drift Review Required=true
+E2E Discovery Loop
+Execution Plan
+Execution Plan: parallel
+Express → standard 昇格
+Express 昇格時の state ロールバック規則
+Express 昇格条件
+Fix Attempts
+Fix Attempts: 0
+Follow-up Classification
+Guardrails
+High finding
+Hotfix Diverted
+Human Check Status
+Human Check Status=approved
+Human Check Status=pending
+Human Recheck
+Human Recheck=required before implementation
+Implementation Reviewer Selection
+Instructions
+Latest Tech Context
+Loop Safety
+Manual merge continuation
+Merge Report Cleanup Trigger
+Next Action
+Next Action=
+Next Action=gdd-test-driven-development
+Open Question
+Open Questions
+Origin Branch
+Origin Merge Commit
+Origin PR
+Origin Resolution Status
+Origin Steering
+Origin VH Rehydration
+Origin VH Rehydration: required
+PR 作成まで
+PR 作成前
+PR 作成前チェックリスト
+PR 作成後
+Parallel Execution
+Parallel Execution（並列実行）
+Parent Hotfix
+Pending Stage ID
+Pending Tasks
+Plan mode
+Planned Follow-up Stage
+Planned Follow-up Stage Lane
+Planning Reviewer Selection
+Planning Reviewer Selection=pending
+Post-Completion PR Flow
+Post-Merge Cleanup
+Post-Merge Follow-up Worktree Policy
+Post-Merge Same-Chat Boundary
+Pre-Follow-up Hygiene Gate
+Pre-PR loop
+PreToolUse
+Problem Discovery
+Progress
+Refactor Gate Bounce Log
+Remediation Loop Safety
+Requirements
+Requirements Review Status
+Requirements Review Status=
+Requirements Review Status=approved
+Requirements Review Status=pending
+Resolution
+Resume From
+Resume From=gdd-requirements-gating
+Resume From=human-check-waiting
+Review Status
+Review Status=approved
+Reviewer Selection
+Root Cause
+Root Cause Tag
+Route In Progress
+Route In Progress=
+Route In Progress=batch_mixed
+SKILL.md
+Schema Validation
+Scope Drift Counter
+Scope Drift Guard
+Stage ID
+Status: unresolved
+Task Size
+Tracking Destination
+Trigger Hotfix
+Verification
+Verification History
+Worktree
+`<gdd-stop reason=
+`done` / `cancelled`
+`gdd-completion-check`
+`gdd-design-gating`
+`gdd-implementation-gating`
+`gdd-requirements-gating`
+`human-check-waiting`
+`state.md`
+`tasklist.md`
+access method
+active worktree
+active: true
+advisory
+amendment
+append-only
+approved
+artifact
+artifacts
+assistant
+batch_mixed
+batch_paused_for_hotfix
+bounce_count
+boundary
+brainstorming
+branch / worktree
+branch delete
+build phase
+cancelled
+changes_requested
+checklist
+cleanup blocked
+cleanup cue
+cleanup 前に worktree 外へ保存
+commands
+commands/
+commands/gdd-dev.md
+completion
+completion-check
+conflict
+credential backend
+debugging
+default branch
+deploy/apply
+deployment/status verification cue
+design.md
+design_detail_only
+detailed design
+development
+dirty diff
+evidence
+express_promotion_required
+external API
+external security evidence
+external verifier hook
+fail-closed
+gate-driven-development
+gdd-brainstorming
+gdd-completion-check
+gdd-completion-check/SKILL.md
+gdd-completion-reviewer
+gdd-design-gating
+gdd-dev.local.md
+gdd-dev.md
+gdd-implementation-gating
+gdd-implementation-reviewer
+gdd-planning-reviewer
+gdd-pr-review
+gdd-pr-review-followup
+gdd-refactor-planning
+gdd-requirements-gating
+gdd-security-reviewer
+gdd-stop
+gdd-subagent-driven-implementation
+gdd-systematic-debugging
+gdd-task-breakdown
+gdd-test-driven-development
+gdd-using-git-worktrees
+gdd-using-git-worktrees/SKILL.md
+gh pr checks
+git-ref:<tag-or-sha>:<path>
+host-managed
+human check
+human-check
+human-check-waiting
+human_recheck_required
+impl-gate
+implementation
+implementation-gating
+implementation_fix_only
+latest default branch
+lightweight
+lightweight `design.md` skeleton
+local:<path>
+markdown
+mergeした
+mismatch
+official integration adoption
+ops-blocking medium
+ownership
+parallel
+phase-progression.md
+planning
+planning candidate
+planning_rework_required
+polluted
+post-merge
+post-merge verification
+pr-review
+production
+progress
+prompt-output contract
+quick (express → standard)
+quick (express)
+quick (standard)
+quick express
+re-entry
+read-only verification
+reason="blocked"
+reason="done"
+refactor
+references
+references/
+references/reviewer-selection.md
+references/task-sizing.md
+requested
+required
+required checks
+requirements
+requirements-gating
+requirements.md
+requirements_amendment
+requirements_amendment + human_recheck_required
+resolved
+reviewer-selection
+reviewer-selection.md
+root bleed
+root cause
+safe cleanup ready
+same-session
+security
+security boundary
+security-reviewer
+self-contained-contract.md
+settings.json
+severity
+skills/gdd-completion-check/SKILL.md
+skills/gdd-using-git-worktrees/SKILL.md
+snapshot
+snapshot:<snapshot-id>:<path>
+stageごとに新 worktree
+staging-verification-blocked
+standard
+state machine
+state-machine.md
+state.md
+state.md / tasklist.md / worklog.md
+status=pass
+steering
+subagent
+subagent-driven-implementation
+systematic-debugging
+task-breakdown
+task-sizing.md
+tasklist
+tasklist re-read
+tasklist.md
+tech-docs-searcher
+technology stack
+technology stack / access method / credential backend
+test-driven-development
+timestamp
+unresolved
+unresolved:<last-known-path>
+unsupported
+using-git-worktrees
+verification
+verified
+workflow
+worklog.md
+workspace
+worktree
+worktree 
+worktree remove
+worktree remove で消える
+worktree 外
+worktrees
+その後
+やること
+スコープ
+セキュリティ
+チェックリスト
+テスト
+デプロイ準備まで
+フィールド
+フォーマット
+ブロック
+マージ
+マージした
+マージ後のローカル整理
+マージ後のローカル整理案内
+ユーザーが `マージした` / `mergeした` / `merged` と報告した場合
+ユーザーが `マージした` / `mergeした` / `merged` と報告した場合、
+ユーザー確認待ち
+リスク
+ルール
+レビューで
+不足前提のチェックリスト
+人間が今やること
+使わない
+依存しない
+優先順位
+元 steering は `done` の完了履歴として固定
+再レビュー
+再確認
+再試行
+判定基準
+参照した正本
+受入条件
+同じチャット継続 + stageごとに新 worktree
+外部前提不足
+完了条件
+実行時
+実装方針
+差し戻し
+影響範囲
+必要なら
+意思決定
+新しい
+新しい task
+新しい worktree
+旧 worktree では後続実装しない
+曖昧さ
+未確認
+残タスク
+無い場合
+確認する
+自走上限
+自走範囲
+計画して
+追加の cleanup 指示を待たず
+追加実装
+## SET 4
+         - ...
+         - .steering/hotfix-x-2026-04-10/ | Inherited From: .steering/hotfix-trigger-2026-04-08/
+         - <ISO 8601>: <AC-ID> <chain-path> <status>
+       # Root Stub for <root-name>
+       - Active hotfix chains: [<path1>, <path2>]   # archive 時点の進行中 hotfix 一覧
+       - Archive: <snapshot-id>
+       - Archived at: <ISO 8601>
+       - Original path: .steering/<root-name>/
+       - VH merge manifest: 複数 chain の rehydrated VH を time-sort で結合した場合の canonical 順序
+       Abandoned Hotfix Attempts:
+       Abandoned Hotfix Attempts: [.steering/hotfix-1-2026-04-15/]
+       Linked Steering: .steering/hotfix-null-ref-2026-04-19/
+       Linked Steering: .steering/hotfix-null-ref-v2-2026-05-10/
+       Origin Resolution Status: local
+       Origin Steering: .steering/20260301-feat-A/
+       Origin Steering: local:.steering/20260301-feat-A/
+       Parent Hotfix: .steering/hotfix-1-2026-04-15/
+       Parent Hotfix: .steering/hotfix-2-2026-05-02/
+       Reason: hotfix-null-ref で patch 適用
+       Reason: production で null ref が発覚
+       Reason: 二次 regression が発覚
+     ## Verification History
+     - 2026-04-19T14:30:00Z: AC-2 status pass → fail
+     - 2026-04-22T09:15:00Z: AC-2 status fail → pass
+     - 2026-05-10T16:00:00Z: AC-2 status pass → fail
+     - T-2: <route=implementation_fix_only, Fix Attempts=N, WIP summary>
+     - T-4: <route=impl-gate pending, WIP summary>
+    ↓
+    ↓ 全タスク完了
+    ↓ 全タスク通過
+   ## Batch WIP Discard (ISO8601)
+   ## CI Partial Pass (YYYY-MM-DDTHH:MM:SSZ)
+   ## Hotfix Diverted (YYYY-MM-DDTHH:MM:SSZ)
+   - Decision: done marker 発行（required 全 pass のため）
+   - Discarded tasks:
+   - Linked Steering: .steering/hotfix-null-ref-2026-04-19/
+   - Non-required Failed: <check-name-1>, <check-name-2>
+   - PR: <url>
+   - Preserved artifacts: <参照 path — worklog.md / tasklist.md Completed section>
+   - Re-plan trigger: <gdd-brainstorming 再入 / gdd-design-gating 再入>
+   - Reason: PR CI High finding post done marker
+   - Required Checks: all pass
+   - Route In Progress: batch_mixed → human_recheck_required
+   - T-1: implementation_fix_only
+   - T-2: human_recheck_required
+   - T-3: design_detail_only
+   - Task: T-3
+   - Trigger: <hotfix human_recheck_required / hotfix planning_rework_required>
+   - [<ISO 8601>] [T-<id>] <body>
+   - 参照した正本: phase-progression.md § Case 2 step 4
+   .steering/<root-name>-stub/
+   Batch Route Decisions (2026-04-19T12:34:00Z):
+   └── stub.md
+  - AC 追加: 「管理者ロールは全件取得できる」
+  - 認可要件変更: 管理者ロール分岐の新規発生
+## Batch Route Decisions (YYYY-MM-DDTHH:MM:SSZ)
+## External Guardrails Inventory
+## Route Decision (YYYY-MM-DDTHH:MM:SSZ)
+- Batch Pause: true (triggered by human_recheck_required)
+- Batch-wide Next Action: human-check-waiting
+- Route: human_recheck_required
+- T-1: implementation_fix_only (WIP 保留)
+- T-2: human_recheck_required (全リセット対象)
+- T-3: design_detail_only (gdd-design-gating へ)
+- Triggered Boundaries:
+- reason: within AC-<id>, no scope/policy/security boundary change
+- route: implementation_fix_only
+- 参照した正本: phase-progression.md § Escalation Decision Table
+- 参照した正本: phase-progression.md § 並列 batch 複数 route 同時発火
+... → gdd-completion-check
+Batch 1: RED（T-1, T-2 を並行） → GREEN+REFACTOR（T-1, T-2 を subagent で並列）
+Batch 1: impl-gate（T-1, T-2 をそれぞれレビュー）
+Batch 2: RED（T-3, T-4）→ GREEN+REFACTOR（並列）→ impl-gate
+Follow-up Classification:
+gdd-brainstorming → human-check-waiting → gdd-test-driven-development →
+gdd-subagent-driven-implementation → gdd-implementation-gating → done
+gdd-task-breakdown（Execution Plan: parallel + バッチ構成）
+| #   | Artifact A       | Artifact B                 | 契約内容                                                     | 検証方法                        | 検証責任者    |
+| --- | ---------------- | -------------------------- | ------------------------------------------------------------ | ------------------------------- | ------------- |
+| 1   | SKILL.md         | PreToolUse hook allowlist  | 使用する tool name × body fields が allowlist に含まれること | hook 実行時ログ確認             | impl-reviewer |
+| 2   | SKILL.md         | API gateway / external API | 呼び出す endpoint × required body fields が API spec と一致  | integration test or staging E2E | impl-reviewer |
+| 3   | `build_prompt()` | skill 起動規約             | prompt 先頭に skill 起動指示が含まれること                   | prompt log 確認                 | impl-reviewer |
+生成日: <ISO 8601>
+## SET 5
+       - `## Origin Verification History (rehydrated)` セクション: root で記録されていた AC 単位の pass/fail 履歴（入手可能な範囲で `snapshot:` / `git-ref:` から復元し、入手不能な分は `unknown (rehydrated)` と明示）。このセクションは rehydration 完了時点で **凍結**（root 由来の履歴の書き足しは禁止）。後から snapshot / git-ref で追加情報が取れた場合は `## Origin Verification History (rehydrated, extended YYYY-MM-DDTHH:MM:SSZ)` という別セクションを **新設** して追加する（既存行は改竄しない）
+     - **`Abandoned Hotfix Attempts` 件数閾値（cancel 連打の escape hatch）**: 同一 root に対する `Abandoned Hotfix Attempts` 配列の **要素数が 3 以上** になった時点で、次の hotfix 起票は `human_recheck_required` を強制発火する。理由: chain depth は cancelled を除外するため、cancel を繰り返せば閾値 5 を形式的に回避できてしまう。3 回連続で hotfix 試行が放棄された = root feature 側の再設計が必要、と判定して gate する。human_recheck 通過後に `Abandoned Hotfix Attempts` を 0 件に wipe する責務は戻り先 skill（`gdd-brainstorming` または `gdd-design-gating`）が担う（戻り先で root を再設計した前提で counter をクリア）
+     - **snapshot 退避された root の VH 追記先決定**（`Origin Resolution Status: snapshot`）: tarball / git-ref への書き戻しは非現実的なため、**hotfix 側の `## Origin Verification History (rehydrated)` に追記** する（すなわち `unresolved` と同じく self-contain に倒す）。`Origin VH Rehydration: required` を立てる点も同じ。差は rehydration 時の復元材料が snapshot / git-ref から取得可能である点のみ。tarball 本体は touch しない（audit 用 read-only artifact として保持）
+     - `Parent Hotfix:` を辿った chain depth が **5 以上** で `human_recheck_required` を強制発火する（connection steering を作る前に人間判断に戻す）
+     - chain depth は `Parent Hotfix` のみを辿って計算するため、cancelled hotfix は閾値 5 の上限消費に寄与しない（realistic な連鎖のみを数える）
+     - root feature steering が archive / discard されている場合も `Origin Steering:` の参照先は root を指し続ける（archive 前の scrub 禁止 — audit 遡行性を保つため path は残す）
+     - self-contain 時の hotfix `tasklist.md` には以下を含める:
+     - stub.md § Abandoned Hotfix Attempts の single source of truth はそのまま維持（root archive 時は stub.md、未 archive 時は root state.md）。子側は「引き取ったことを示す annotation 付きで複写」し、stub.md 側の値を改竄しない
+     - 時系列で **append only**（既存 entry は上書きしない）
+     - 通常は root feature steering の `Verification History` に追記することで監査連鎖を保つが、root が **物理 delete** されて VH 追記先が存在しない場合、hotfix 側 steering の `tasklist.md` に `Origin VH Rehydration: required` フラグを立て、hotfix 側が VH を **self-contain** する
+    1. `state.md` の `Scope Drift Counter`（= `design_detail_only` 発動回数）が **3 を超えた**（= 4 回目以降）
+    2. `state.md` の `Cumulative Changed Files` が brainstorming 時の「影響範囲の事前スキャン」ファイル数の **3 倍を超えた**
+   **Why**: CI 不在 / auth 失敗 / 空配列 / override 衝突はいずれも silent pass の温床となる。「到達不能 / 設定不明 / 明示未設定」の 3 状態で排他分類し、前 2 つは `blocked` に倒すことで done marker の silent 発行経路を塞ぐ。override は API fallback 専用と明確化し、typo 検出を fail-closed にすることで「override を追加したら silent pass が起きた」事故を防ぐ。
+   - **2 task 同時 Express 昇格時の直列化**: 同一 batch 内で 2 task が同 turn に `express_promotion_required` を発火した場合、**小さい T-id を持つ task から順に直列で昇格処理**する（例: T-1 と T-3 が同時発火なら T-1 を先に処理し、T-3 は T-1 昇格完了後に再評価）。並列昇格は state.md の Requirements/Design Review Status の一斉 `pending` 戻しが race するため禁止
+   - **`gh` バイナリ不在**: fail-closed `blocked`（AC Verification fallback には倒さない — CI がある可能性を否定できないため）
+   - **auth 401/403**: retry せず **即 `blocked`**（credential 破損・token 期限切れは待機で回復しない）
+   - **network error（timeout / 5xx / DNS failure）**: exponential backoff で **3 回 / 最大 60 秒** 再試行。超過で `blocked`
+   - **override validation 必須**: override に含まれる check 名が PR の check run リスト（`gh pr checks`）に 1 つも存在しない場合は typo / stale と判断し fail-closed `blocked`（silent pass 防止）
+   - Approved Direction 末尾に時系列 append-only。既存行の改変は禁止
+   - `Completed Tasks` / `Verification` は **保持**（revert しない）。finding 解消後に Pre-PR loop を再実行する
+   - stub は物理削除禁止（audit 用 read-only artifact）
+   - 元 steering 自体は done のまま再 open しない（reopening は state machine を複雑化させるため避ける）。hotfix lane の新 steering で独立して修正する
+   - 当該 batch の `Batch Route Decisions` / WIP / `Fix Attempts` はすべて **保持**（discard しない）
+   3. `scrub_rev` を追記せずに scrub した場合は **bounce_count が 0 に見える silent reset** が発生する危険がある。scrub 後の最初の refactor 起動時に Step 0a の fail-closed 処理で不整合を検出し `human_recheck_required` に倒す
+   4a. **Approved Direction 末尾 per-task annotation の追記保護**: `state.md` の `Approved Direction` 末尾への per-task annotation 追記（Express 昇格時の境界記録、drift 発覚時の注記など）も **main session 単独 writer** 契約に含める。subagent は annotation を直接 edit せず main session に報告する。annotation フォーマットは固定で以下を使う:
+   Post-PR CI の扱いは次の 3 状態に排他分類する。分類は以下の順で評価し、最初に一致した行の処理に倒す。
+   `Origin Resolution Status` はホットフィックス起票時に **1 度だけ評価・記録**し、その後 snapshot → unresolved など実体が変化した場合は **hotfix 起票 skill が起票開始 step で必ず再評価**する:
+   c. **partial pass の扱い**: required check が全 pass なら **partial pass も done marker 発行可**。ただし required 以外の check で fail があれば worklog に以下を記録:
+   e. **Idempotency**: 同一 commit SHA に対する CI 再 check 成功時、直前の Verification History エントリと **status が同じなら追記しない**（重複 log の防止）。status が変わった場合だけ新 entry を追加。これにより push なしの再 check で VH が肥大化しない
+   g. **Manual skip 禁止**: reviewer 判断で CI fail を無視して done marker を発行することは **不可**。CI 回避が必要なら必ず `human_recheck_required` 経路に倒し、人間再承認として記録する。PR 本文への「CI skip 理由」記載も done marker 発行の根拠にしない
+   invariant テキストが scrub で変更された場合、Bounce Log の sha1 補助 key との継続性が切れる。以下を必須化:
+   root feature steering を archive（tarball 退避 + local 削除）する際、以下の **root stub** を local に残す:
+   | 2   | **CI 設定不明**       | `gh` 到達成功 + required checks API 応答成功 + required 配列が空 + `ci_required_overrides` も未設定                                  | `blocked` 停止（silent pass 禁止）  |
+   | 3   | **CI 明示的に未設定** | `.github/` や `ci.yml` 系設定ファイルが repo に存在しない（確証あり） or ユーザーが `settings.json` で `ci_configured: false` を明示 | AC Verification fallback（下記 f）  |
+   | AC 自然文本文                                 | **可**（情報粒度を落とす最小限に）      | scrub 箇所を `<redacted by security on ISO8601>` で置換し、AC-ID は維持する                                                                                                            |
+   | Root Cause Tag                                | **禁止**（escalation 判定の正本のため） | 機密固有名詞を含む場合は generic tag に変更（例: `prod-db-01-error` → `db-connection-error`）し worklog に変更記録を残す                                                               |
+   | `Origin Steering:` の path 文字列             | **禁止**（audit 遡行性を保つ）          | —                                                                                                                                                                                      |
+   | state field 値（Origin Resolution Status 等） | **禁止**                                | —                                                                                                                                                                                      |
+   上記に該当しないパス（CI 正常動作）では通常の待機・判定（下記 b〜e）を行う。
+  - **AC 行では `pending` / `pass` / `fail` のみ**（`N/A` / `unsupported` は AC 行では禁止 — AC は測定可能でなければならない）
+  - **`method` は非空必須**。`TBD` / `unknown` 等の未確定値は禁止 — method 未確定は方向性判断のため `human_recheck_required` に短絡する
+  - Guard 発動 = 即座に human check ではなく、「方向性と矛盾しないか」を再確認する契機
+  - `Approved Direction` に人間が設定した制限を超える
+  - schema 違反（AC 行での unsupported / method 空 / pass で evidence 空 / security pass で prod 未検証）は `gdd-completion-check` で fail-closed。詳細は `skills/gdd-completion-check/SKILL.md` § Schema Validation を参照
+  - 発動条件は以下 2 つの **OR**（どちらかを満たしたら発動）:
+  2. `Approved Direction` の自走範囲と矛盾しない
+**Why**: PR 作成後・merge 後の問題発覚は実務で避けられない経路。`<gdd-stop reason="done">` を契機に state machine を閉じる設計は保つが、hotfix lane を別 steering として扱うことで「done の不可逆性」と「現実の問題対応」を両立する。元 steering の Verification History は audit trail として残し、単体テスト合格時点の記録を改竄しない。
+**Worklog フォーマット**: 複数 route 同時発火時は `worklog.md` に以下で記録:
+**判定の優先順位**: 迷ったら **安全側に倒す**（上の行より下の行を選ぶ）。ユーザーが「もう 1 回 implementation_fix_only で」と明示しても、Fix Attempts ≧ 3 や Approved Direction 境界超過を override できない（`commands/gdd-dev.md` Instructions § Contract override 不可 を参照）。ただし **procedural / evidence only** の反復は policy-level 変更ではないため、Fix Attempts ≧ 3 でも自動で `human_recheck_required` に短絡しない。
+**複数境界が同時発火した場合の記録粒度**: `human_recheck_required` で複数の境界を同時に越えた場合（例: 「AC 追加」かつ「認可要件変更」）、主要因 1 つではなく **全ての境界をリスト形式で残す**。worklog.md に以下フォーマットで記録:
+**記録義務**: route を確定した瞬間に `worklog.md` へ「選んだ route / 該当条件 / 参照した正本」を残す。`Fix Attempts >= 2` で route 判断記録が無ければ fail-closed。
+- `Planned Follow-up Stage Lane` に `Pending Stage ID` が残る場合は、後続 Stage をその場で勝手に実装開始しない。`Tracking Destination` が未作成なら新 steering seed / backlog / issue のどれに残すかを示し、`Human Recheck=required before implementation` なら次の `/gdd-dev` 入口プロンプトを出して停止する。
+- `tasklist.md` は作成しない。`Next Action` は `state.md` の `Resume From` で管理する（build phase に入るまで）
+- build phase に入ったら `tasklist.md` を最小構成で作成する:
+- external verifier hook の実装詳細や command surface は `gate-driven-development` 側で固定しない
+- high 指摘は必ず解消。unresolved な medium が残る間は `gdd-task-breakdown` に進まない
+- human check 承認後は `gdd-test-driven-development` に直接進む（`gdd-design-gating` を経由しない）
+- impl-gate は `gdd-implementation-reviewer` の inline checklist を 1 回のみ実行し advisory 化する（High + ops-blocking medium のみ fail-closed で停止、それ以外の medium/low は remediation に入らず `state.md` の `## Advisory Findings (Express Impl-Gate)` へ記録し、post-completion PR flow がそこから PR 本文の `## Advisory Findings` 節へ搬送する）
+- quick (express / standard) では並列実行しない（タスク数が少なく効果が薄い）
+- 当初目的の未達（例: 「シンプルにしたい」のに追加コード中心で削除が少ない）→ まず `requirements_amendment + human_recheck_required` として **現在の session / current steering / current PR** に追記・巻き戻し、別 Plan にしない
+1. **state.md 書き込みは main session のみ**: subagent は state.md を直接 edit しない。タスク処理結果（route 判定 / Bounce Log 更新候補行 / Fix Attempts 増分等）を tool 報告経由で main session に返す
+1. **退避対象 task を `Batch Route Decisions` から外す**: 当該 task の行を削除し、worklog.md に以下を記録:
+1. **通過済タスク（impl-gate approved）の commit**: **一旦保持**（revert しない）。再承認後の新 AC に対して valid か `gdd-task-breakdown` 再実行時に evaluate する。invalid と判断されたら cleanup task に降格して revert 対象に回す
+2. **緊急明示時**: `state.md` に `batch_paused_for_hotfix: true` を立て、以下を実行:
+3. **同一 identifier への競合解決**: 同一 identifier-key（例: Bounce Log 行）への同時書き込みが発生した場合は「**先着の bounce_count を採用 + 後着は無視**」で決着する（二重 +1 を防ぐ）。「先着」の判定基準は **task-id 辞書順**（T-1, T-2, T-3 ...）で固定する（timestamp は精度不足、subagent 起動順は非決定的のため採用しない）。競合採用が発生した場合は main session が worklog.md に `## Bounce Log Conflict Resolution (ISO8601)` ブロックで「identifier-key / 採用 task-id / 無視 task-id / 各 subagent の bounce_count」を記録する（audit trail）
+4. **Batch Route Decisions の per-task 順序**: `Batch Route Decisions` ブロック内の行順序は task-id の辞書順で固定（T-1, T-2, T-3 ...）。subagent 報告順に依存しない
+4. **再承認後の再開**: `gdd-task-breakdown` を必ず再呼び出す。既存通過分の Completed Tasks を carry-over するかは reviewer 判断 —— 新 AC と整合するなら残し、整合しないなら cleanup task に降格
+4. **緊急 Hotfix が batch 前提を変える場合**: Hotfix 内で `human_recheck_required` / `planning_rework_required` が発火したら、batch 側も `Batch Route Decisions` を discard して再計画に合流する。discard 時は main session が worklog.md に以下 schema で記録する:
+4. abort されたタスクの差分は **discard**、worklog に以下を記録: `Abort Reason: in-flight overlap / Overlapping File: <path> / Preserved Task: <id>`
+5. **`implementation_fix_only` のみ複数発火**: batch pause せず、各タスクで fix_only ループを並列継続。WIP は discard しない
+5. **violation 検知時の fail-closed**: identifier-key 衝突・順序逆転・parse 失敗・**行欠落（partial write — subagent 報告数と apply 行数の差）** 等を検知した場合は state.md を変更せず停止し、`<gdd-stop reason="human-check-waiting">` で報告する
+6. **partial write 検知時の Rollback 提示**: Rule 5 発火時は main session が以下 3 択をユーザーに提示する。(A) **discard all**: 当該 turn の全 apply 候補を破棄し state.md を apply 前状態に戻す（最も保守的）。(B) **apply verified subset**: parse 成功 + identifier 衝突なし + 報告完全な subagent 分のみ apply し、残りは worklog に未 apply 候補として記録。(C) **human review**: state.md を触らずユーザーが手動で state.md を編集する（非常口）。既定は (A)。選択後 worklog.md に `## Rollback Decision (ISO8601)` で記録
+> **上位正本**: `self-contained-contract.md`（fail-closed 条件）、`state-machine.md`（遷移表）
+PR merge 後の追加実装は、同一セッション継続であっても元 worktree を実装場所にしない。元 steering は `done` の完了履歴として固定し、追加実装は new amendment / Hotfix Lane の新 steering として扱う。
+PR が default branch へ merge 済みの場合は例外。自然文では「続きで」「追加で」と言われても、実装場所として元 worktree / 元 branch を再利用しない。まず `gdd-using-git-worktrees` の **Pre-Follow-up Hygiene Gate** で既存 worktree を整理し、その結果を HITL に出してから、latest default branch から新しい amendment / hotfix worktree を作る。
+PR 作成後 / merge 後に発覚した finding の扱い（SRE フローで必ず起きる経路を明文化）:
+`<gdd-stop reason="done">` 発火後の修正依頼（same-session correction 対象）に Active Session Follow-up Classification を適用する際は、以下を default とする:
+`batch_mixed` 下では subagent が並列に各タスクを処理するため、`state.md` の `Batch Route Decisions` / `Bounce Log` / `Fix Attempts` 等を複数 writer が同時に touch する race リスクがある。以下の serialization contract で保護する。
+`batch_mixed` 進行中に `<gdd-stop reason="done">` 発行後の Hotfix 契機（PR CI High finding / production bug）が発火するケース、および active batch 中にユーザーが手動で Hotfix Lane を要求するケースは、既存の Post-PR/Post-Merge Contract §2 では扱えない。以下の bridge contract で補完する。
+`requirements_amendment + human_recheck_required` では、task size / reviewer selection / model routing / ADR 起票要否 / tasklist reset を必ず再評価する。特に Dockerfile / container build / deploy boundary / ownership boundary が増えた場合は「実装詳細の追加」に倒さず、承認済み AC と設計への差分として記録してから再 gate に戻す。
+`requirements_amendment` と `human_recheck_required` が同時に見える場合は、まず `requirements_amendment` として AC / requirements / design の差分を既存 steering に反映し、その差分が policy / scope / ownership / security boundary / prompt-output contract を変えるなら `human_recheck_required` として `human-check-waiting` に戻す。active session 中の `requirements_amendment` は「差分を作る処理 route」であり、`human_recheck_required` は「再承認が必要な停止 route」。この組み合わせを単純な `implementation_fix_only` に落としてはならない。
+standard タスクでタスク数 3+ かつ依存グラフから並列バッチが構成できる場合、Build Phase は以下のフローを取る:
+task-breakdown 時の独立性確認は起動「前」1 回限り。実装中に設計変更等で ファイル overlap が発覚した場合は以下の手順で解決する。
+| Approved Direction の境界超過（AC 追加・削除、security 新規、認可・route 変更、外部依存変更、technology stack / access method / credential backend / multi-tenant boundary / official integration adoption 変更等） | `human_recheck_required`   | `human-check-waiting`                                                                                                                                                             |
+| 上記いずれも決めきれない / 判定情報不足                                                         | fail-closed `blocked`      | —                                                                                                                                                                                 |
+| 同一 root cause が 2 回以上再発 + Approved Direction の自走範囲内                               | `design_detail_only`       | `gdd-design-gating`                                                                                                                                                               |
+マージ後のローカル整理案内は、次 stage の実装計画より先に表示する。方針は **同じチャット継続 + stageごとに新 worktree**。cleanup 前に worktree 外へ保存されているかを確認し、worktree remove で消える artifact / continuation / 未 push 成果物がないかを見る。実行は `gdd-using-git-worktrees` に戻し、`worktree remove` と `branch delete` は候補提示後に行う。旧 worktree では後続実装しない。

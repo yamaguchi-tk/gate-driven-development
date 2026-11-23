@@ -1,0 +1,28 @@
+{
+  "case_id": "active-gdd-terse-planning-amendment-followup",
+  "conversation": [
+    {
+      "role": "assistant",
+      "text": "requirements.md の草案を提示します。human-check 承認前の計画レビュー中です。"
+    },
+    {
+      "role": "user",
+      "text": "これも入れて"
+    }
+  ],
+  "context": {
+    "active_gdd_marker": true,
+    "superpowers_enabled": true,
+    "planning_before_approval": true
+  },
+  "expected": {
+    "primary": "gdd",
+    "route_contains": "gate-driven-development:gdd-requirements-amendment",
+    "must_not_route": [
+      "gate-driven-development:gdd-status",
+      "superpowers:writing-plans",
+      "superpowers:executing-plans"
+    ],
+    "requires_status_or_resume": false
+  }
+}

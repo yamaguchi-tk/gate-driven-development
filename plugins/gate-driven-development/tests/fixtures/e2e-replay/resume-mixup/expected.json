@@ -1,0 +1,12 @@
+{
+  "scenario": "resume-mixup",
+  "runner": "lint-resume-integrity",
+  "expected_status": "fail",
+  "steering_dir": "worktree/.steering/20260601-example-review-task",
+  "branch": "codex/20260605-example-dns-task",
+  "worktree_path": "worktree",
+  "expected_reason_contains": [
+    "Resume Integrity",
+    "branch/task mismatch"
+  ]
+}

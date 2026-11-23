@@ -1,0 +1,28 @@
+{
+  "case_id": "active-gdd-planning-status-question",
+  "conversation": [
+    {
+      "role": "assistant",
+      "text": "requirements.md の草案を作成しました。human-check 承認前です。"
+    },
+    {
+      "role": "user",
+      "text": "承認前の完了条件を確認したい"
+    }
+  ],
+  "context": {
+    "active_gdd_marker": true,
+    "superpowers_enabled": true,
+    "planning_before_approval": true
+  },
+  "expected": {
+    "primary": "gdd",
+    "route_contains": "gate-driven-development:gdd-status",
+    "must_not_route": [
+      "gate-driven-development:gdd-requirements-amendment",
+      "superpowers:writing-plans",
+      "superpowers:executing-plans"
+    ],
+    "requires_status_or_resume": true
+  }
+}

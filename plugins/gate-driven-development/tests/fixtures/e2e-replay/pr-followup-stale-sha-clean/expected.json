@@ -1,0 +1,8 @@
+{
+  "runner": "lint-pr-review-followup-state",
+  "path": "state.md",
+  "expected_status": "fail",
+  "expected_reason_contains": [
+    "stale head SHA"
+  ]
+}

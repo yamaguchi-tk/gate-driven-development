@@ -1,0 +1,13 @@
+{
+  "runner": "lint-worktree-provenance",
+  "steering_dir": ".steering/20260601-example-review-task",
+  "branch": "codex/20260605-example-dns-task",
+  "worktree_path": "repo",
+  "pr_head_branch": "codex/20260605-example-dns-task",
+  "diff_files": "diff-files.txt",
+  "expected_status": "fail",
+  "expected_reason_contains": [
+    "branch/task mismatch",
+    "diff touches another steering task"
+  ]
+}

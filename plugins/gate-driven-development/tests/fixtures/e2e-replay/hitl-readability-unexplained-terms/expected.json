@@ -1,0 +1,10 @@
+{
+  "scenario": "hitl-readability-unexplained-terms",
+  "runner": "lint-human-check-language",
+  "expected_status": "fail",
+  "path": "final-hitl.md",
+  "expected_reason_contains": [
+    "説明なしの内部用語",
+    "human-confirm"
+  ]
+}

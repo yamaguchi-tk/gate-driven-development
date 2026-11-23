@@ -1,0 +1,10 @@
+<task-notification>
+<task-id>{task_id}</task-id>
+<tool-use-id>{tool_use_id}</tool-use-id>
+<output-file>/private/tmp/claude-0/-project/session/tasks/{task_id}.output</output-file>
+<status>completed</status>
+<summary>Agent "棚卸し" finished</summary>
+<note>This agent stopped with background work of its own still running. It may resume on its own when that work completes or reports, and the same task-id notifies again if it does; the result below may be interim.</note>
+<result>（途中の結果。伏せた）</result>
+<usage><subagent_tokens>145183</subagent_tokens><tool_uses>34</tool_uses><duration_ms>155557</duration_ms></usage>
+</task-notification>

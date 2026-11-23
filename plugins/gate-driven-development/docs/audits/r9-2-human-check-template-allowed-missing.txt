@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "target": "references/human-check-template.md",
+  "allowed_missing": [
+    {
+      "anchor": "   - `Codebase Health Survey` に設計・タスク順序・検証方法へ影響する finding がある場合は、`コードベース健全性確認` を必ず含める。全 finding を貼らず、巨大ファイル、依存管理、テスト/CI baseline のうち「今回どう扱うか」を人間が判断すべきものだけに絞る。影響なしなら欄は省略可だが、requirements.md の finding は `no-action + 理由` にする",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した採番振り直しによる行頭 prefix 変更（旧: 必須ルール 13「`ベースライン検証` を承認ポイントに昇格する条件」配下のネスト bullet → 新: 独立した必須ルール 26 へ昇格）。原本のネスト位置が誤りで、内容は `ベースライン検証` の下位条件ではなく独立の表示義務であるため是正した。本文（行頭 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "10. 初回 human check では `まず見るところ` / `人間に戻す主な条件` / `まだ確認できないこと` を `この OK で許可すること / 許可しないこと` より前に置く。制限事項・未検証事項・停止条件を詳細 trace や参考欄に埋めない",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 10 → 新 11）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "11. standard または複数段階の quick (standard) では `Stage Continuity Brief` を必ず含める。`Implementation Sequence Plan` 全文を貼らず、Stage 間の生成物・consume 関係・前回からの段階計画の変更・人間に戻す条件だけを 3-5 行に圧縮する",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 11 → 新 16）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "11. 初回 human check では `判断ポイント` を必ず含め、`OKで実装・検証すること` / `OKしても今回は対象外のこと` / `人間に決めてほしいこと` を 3-5 行程度で書く。制限事項を詳細表に埋めず、先頭で読む人に見えるようにする",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 11 → 新 12）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "12. `Baseline Verification Status` を取得済み、または未実行理由が判明している場合は、`前提` の `ベースライン検証` に必ず出す。作業前 failure を隠すと、承認者が「今回壊した / 今回直るはず」を誤認する",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 12 → 新 14）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "12. standard または複数段階の quick (standard) で `Implementation Sequence Plan` が複数 Stage を持つ場合、`Stage Continuity Brief` とは別に `段階実装案` を必ず含める。`段階実装案` には `Stage ID`、この段階でやること、この PR / 後続の区分、この OK で承認する範囲、完了確認、次に進む条件 / 人間に戻す条件、後続の追跡先を出す。`Stage Continuity Brief` だけで済ませない",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 12 → 新 17）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "12. 初回 human check では `承認サマリ` を `判断ポイント` より前に置く。非エンジニア向けに `人間が今だけ判断すること` / `OK で許可される最大到達点` / `OK でも許可されないこと` を 5 行以内で出し、詳細表を読まない承認者にも誤承認させない",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 12 → 新 13）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "13. 「段階実装」「複数段階」「この PR ではここまで」「後続で実施」と書く場合、`段階実装案` が無い human check は contract 違反。段階の詳細が多い場合でも、HITL には stage list summary を出し、詳細は requirements.md の `Implementation Sequence Plan` に残す。`follow-up-pr` の Stage は `後続PRの方針のみ承認` または `後続PR着手前に再承認` を明記し、この OK だけで後続実装へ自走しない",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 13 → 新 18）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "14. quick (express) の単一段階では `Stage Continuity Brief` を完全省略しない。single-stage 最小表示として、`段階連続性: single-stage` / `後続が依存する生成物: なし` / `前回からの段階計画の変更: なし` / `人間に戻す条件: AC 追加・修正範囲拡大` だけを出す。`段階実装案` は `N/A - single-stage express` と 1 行でよい。これにより Express Path も同じテンプレートを使いながら、standard 相当の Stage 詳細を増やさない",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 14 → 新 19）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "15. `LLM 方針レビュー` を必ず含める。`requirements.md` の `Plan Direction LLM Review` から、ユーザー入力との一致 / 作り方の妥当性 / 安全性と制約 / 検証と自走 / 表示のわかりやすさの結果だけを短く出す。長い reviewer 本文、思考ログ、model 比較は出さない。`Plan Direction LLM Review=not_applicable` の場合も、理由を 1 行で示し、欄自体は省略しない",
+      "kind": "replaced",
+      "reason": "PR-W1 / AC-W2-2 で人間が明示承認した無条件必須 3 件の撤去に伴う文言変更。旧文の末尾『〜の場合も、…、欄自体は省略しない』を、T-8 が 2 正本へ入れたのと同じ語『`not_applicable` の場合は HITL から欄ごと省略してよい（判定結果と理由は requirements.md に必ず記録する）』へ書き換えた。本エントリは T-6 の採番変更（旧 15 → 新 20 / 旧 16 → 新 21）も併せて起きており、移動と文言変更の両方を含むが、契約テストの分類上は本文が変わる `replaced` として扱う。判定結果と理由を requirements.md に残す点は維持しており、保護の純減ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 無条件必須の撤去に伴う承認済み文言変更 2 件」を参照。",
+      "replacement": "20. `LLM 方針レビュー` を必ず含める。`requirements.md` の `Plan Direction LLM Review` から、ユーザー入力との一致 / 作り方の妥当性 / 安全性と制約 / 検証と自走 / 表示のわかりやすさの結果だけを短く出す。長い reviewer 本文、思考ログ、model 比較は出さない。`Plan Direction LLM Review=not_applicable` の場合は HITL から欄ごと省略してよい（判定結果と理由は requirements.md に必ず記録する）"
+    },
+    {
+      "anchor": "16. `Adversarial Requirements Review` を必ず含める。`requirements.md` の `Adversarial Requirements Review` から、反対仮説 / ズレリスク / 採用した修正 / 残すリスクだけを短く出す。`Dialectic Review Lane=not_applicable` の場合も、反対仮説に `not_applicable: <理由>` と書き、欄自体は省略しない",
+      "kind": "replaced",
+      "reason": "PR-W1 / AC-W2-2 で人間が明示承認した無条件必須 3 件の撤去に伴う文言変更。旧文の末尾『〜の場合も、…、欄自体は省略しない』を、T-8 が 2 正本へ入れたのと同じ語『`not_applicable` の場合は HITL から欄ごと省略してよい（判定結果と理由は requirements.md に必ず記録する）』へ書き換えた。本エントリは T-6 の採番変更（旧 15 → 新 20 / 旧 16 → 新 21）も併せて起きており、移動と文言変更の両方を含むが、契約テストの分類上は本文が変わる `replaced` として扱う。判定結果と理由を requirements.md に残す点は維持しており、保護の純減ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 無条件必須の撤去に伴う承認済み文言変更 2 件」を参照。",
+      "replacement": "21. `Adversarial Requirements Review` を必ず含める。`requirements.md` の `Adversarial Requirements Review` から、反対仮説 / ズレリスク / 採用した修正 / 残すリスクだけを短く出す。`Dialectic Review Lane=not_applicable` の場合は HITL から欄ごと省略してよい（判定結果と理由は requirements.md に必ず記録する）"
+    },
+    {
+      "anchor": "17. 初回 human check では `既存実装の調査状況` を必ず含める。`Existing Implementation Survey` から、repo 構造、関連ファイル、類似実装、read / write / persistence / API / MCP / wrapper / adapter 経路、tests / contracts、docs、policy 境界のうち、再利用判断や未調査だとズレる点だけを圧縮表示する。読み書き・保存・投稿・検索・更新・外部連携を含むタスクでこの欄が無い場合は contract 違反",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 17 → 新 22）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "18. ユーザー入力または `User-Stated Completion Conditions` に `merge` / `マージ` / `再学習` / `relearning` / `post-merge verification` / `release verification` / `apply 後確認` が含まれる場合、`Post-PR Completion Scope` を必ず表示する。標準既定を理由に自走上限を PR 作成までへ自動降格しない。write 操作が未承認なら `別途明示承認が必要な操作` に分離し、完了条件そのものは残す",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 18 → 新 23）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "20. `OKで実装・検証すること`、`検証`、`no-post`、`score`、`compare`、`runner`、`E2E`、`external evidence` のいずれかを出す場合は、`検証計画` を必ず含める。`検証計画` には検証対象、どこで確認するか、どう確認するか、OK条件、失敗時の扱いを出す。`classified unavailable artifact` や外部前提不足は成功扱いではなく、分類済み未検証として扱い、PR ready / 完了とは言わない",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 20 → 新 25）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "8. architecture / CI / IaC policy / runtime / framework / test tooling / access method / credential backend の選定で複数の妥当な選択肢がある場合、`Architecture Option Matrix` を必ず含める。既存 repo 標準 / 業界標準 / vendor official / 最小の自前実装を比較し、AI が勝手に単一案へ丸めない。非標準な自前実装を採る場合は、採用理由と採用しない理由を `人間に確認` する承認ポイントへ昇格する",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 8 → 新 9）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "9. 初回 human check では `この OK で許可すること / 許可しないこと` を必ず含める。`OK` が許可する scope / AC、実装、自走、検証と、`この OK に含まれないこと` を同じ表で明示する。危険操作・本番相当 write はここで明示的に **承認しない** と書く",
+      "kind": "moved",
+      "reason": "PR-W1 / AC-W2-6 で人間が明示承認した必須ルールの採番振り直しによる prefix 変更（旧 9 → 新 10）。本文（番号 prefix を除いた行）は逐語で現存しており、契約の削除ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 採番変更に伴う承認済みアンカー移動 16 件」を参照。"
+    },
+    {
+      "anchor": "### 承認ポイントの 4 要素（欠落禁止）",
+      "kind": "replaced",
+      "replacement": "### 承認ポイントの 6 要素（欠落禁止）",
+      "reason": "PR-W1 / AC-W2-1 で人間が明示承認した承認ポイントの 4 要素 → 6 要素化による**文言そのものの変更**。T-6（AC-W2-6）の採番変更 16 件が「本文は逐語現存し行頭 prefix だけ変わった」移動だったのに対し、本 3 件は `4 要素` → `6 要素` という規範内容の更新であり、旧文言は意図的に存在しなくなる。置換後の文言は `### 承認ポイントの 6 要素（欠落禁止）` と `各承認ポイントは必ず以下の 6 要素を揃える。1 つでも欠けたら contract 違反:` で、要素は 4 件から 6 件へ増えている（削除ではなく追加）。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 承認ポイント 6 要素化に伴う承認済み文言変更 3 件」を参照。"
+    },
+    {
+      "anchor": "各承認ポイントは必ず以下の 4 要素を揃える。1 つでも欠けたら contract 違反:",
+      "kind": "replaced",
+      "replacement": "各承認ポイントは必ず以下の 6 要素を揃える。1 つでも欠けたら contract 違反:",
+      "reason": "PR-W1 / AC-W2-1 で人間が明示承認した承認ポイントの 4 要素 → 6 要素化による**文言そのものの変更**。T-6（AC-W2-6）の採番変更 16 件が「本文は逐語現存し行頭 prefix だけ変わった」移動だったのに対し、本 3 件は `4 要素` → `6 要素` という規範内容の更新であり、旧文言は意図的に存在しなくなる。置換後の文言は `### 承認ポイントの 6 要素（欠落禁止）` と `各承認ポイントは必ず以下の 6 要素を揃える。1 つでも欠けたら contract 違反:` で、要素は 4 件から 6 件へ増えている（削除ではなく追加）。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の 「PR-W1 追記（2026-08-17）: 承認ポイント 6 要素化に伴う承認済み文言変更 3 件」を参照。"
+    },
+    {
+      "anchor": "一次表示の目安は quick (express) 10 行以内、quick (standard) 20 行以内、standard 30 行以内。standard で 30 行を超える場合は、情報を削るのではなく、詳細を `requirements.md` / `design.md` / `tasklist.md` / `worklog.md` に逃がし、HITL には「判断に必要な差分」だけを残す。",
+      "kind": "pointerized",
+      "reason": "PR-W1 / AC-W2-5（数値の正本 1 箇所）で人間が明示承認した一次表示バジェットの正本ポインタ化（T-9 Step 3b）。旧文が抱えていた裸数値 10 / 20 / 30 を撤去し、scripts/lib/hitl_budget.py の PRIMARY_SURFACE_MAX_LINES を指す表現へ移した（T-7 Step 2b が compact 側に入れたのと同じ言い回し）。旧文の standard 30 は正本の 45 と食い違っており、ポインタ化でこのズレも解消している。本エントリが kind=replaced ではなく pointerized なのは、『裸数値を含む約 130 chars を除去する』という変更の性質上、旧本文との SequenceMatcher 比が構造的に 0.8 に届かないため（実測 0.614。文言調整 4 案でも 0.643 / 0.644 / 0.652 / 0.709 が上限）。類似度の代わりに『宣言した 1 スパン以外は 1 文字も変わっていない』完全再構成の等式で裏付ける。規範そのもの（情報を削らず詳細を requirements.md / design.md / tasklist.md / worklog.md へ逃がす）は 1 文字も変わっておらず、保護の純減ではない。詳細は docs/audits/r9-2-human-check-template-audit-20260729.md の「PR-W1 追記（2026-08-17）: 一次表示バジェットの正本ポインタ化 1 件」を参照。",
+      "replacement": "一次表示の行数の目安は `scripts/lib/hitl_budget.py` の `PRIMARY_SURFACE_MAX_LINES` が正本（sizing 別。ここに数値を再掲しない）。目安を超える場合は、情報を削るのではなく、詳細を `requirements.md` / `design.md` / `tasklist.md` / `worklog.md` に逃がし、HITL には「判断に必要な差分」だけを残す。",
+      "removed": "目安は quick (express) 10 行以内、quick (standard) 20 行以内、standard 30 行以内。standard で 30 行",
+      "pointer_clause": "行数の目安は `scripts/lib/hitl_budget.py` の `PRIMARY_SURFACE_MAX_LINES` が正本（sizing 別。ここに数値を再掲しない）。目安",
+      "pointer_path": "scripts/lib/hitl_budget.py",
+      "pointer_symbol": "PRIMARY_SURFACE_MAX_LINES"
+    }
+  ]
+}

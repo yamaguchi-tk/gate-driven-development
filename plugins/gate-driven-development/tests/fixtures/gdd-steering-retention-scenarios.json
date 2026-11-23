@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "description": "Focused GDD scenario fixtures for steering retention and post-merge continuation.",
+  "scenarios": [
+    {
+      "scenario_id": "branch_only_steering_post_merge_continuation",
+      "title": "Post-merge continuation must preserve decisions without committing raw task steering",
+      "source_session": "synthetic:pr83-steering-retention",
+      "category": "next-plan",
+      "origin": "gdd_flow_goal",
+      "goal": "PR merge 後に raw task steering を main へ混ぜず、必要な判断だけを永続化して新 worktree で次フェーズへ進む",
+      "flow_stage": "completion / post-merge follow-up",
+      "prompt": "A GDD PR was merged. The old worktree still has .steering/<task>/ files and the next stage needs the approved decisions. The repo may or may not already track docs/learned-patterns.md.",
+      "artifacts": ["assistant"],
+      "current_contract_refs": [
+        "skills/gdd-completion-check/SKILL.md",
+        "skills/gdd-using-git-worktrees/SKILL.md",
+        "references/post-completion-learning.md",
+        "references/cross-task-learning.md"
+      ],
+      "must_preserve": [
+        "raw task .steering/<task>/ is branch-only steering",
+        "repo-level learned-patterns is not raw task steering",
+        "merge follow-up order is read-only verification -> persistence -> cleanup -> new worktree",
+        "cleanup unsafe does not block creation of the next worktree",
+        "task branch may temporarily commit raw task steering for handoff only when needed, but PR/main must be net-zero",
+        "temporary raw steering push leaves branch history risk and requires squash merge plus branch delete"
+      ],
+      "must_not_happen": [
+        "commit raw task .steering/<task>/ to main",
+        "create docs/learned-patterns.md in a repo that has not adopted it",
+        "reuse the old implementation worktree for the next stage",
+        "delete a dirty or ambiguous worktree"
+      ],
+      "contract_snapshot": [
+        "main には raw task .steering/<task>/ を含めない",
+        "repo-level learned-patterns (docs/learned-patterns.md) の採用済み判定は tracked on origin/<default-branch> or .gdd-config.md / repo docs",
+        "standard order: read-only verification -> persistence -> cleanup -> new worktree",
+        "branch-only transfer: temporary task branch commit is exception-only, then git rm before PR/main",
+        "branch history risk: squash merge and delete handoff branch",
+        "cleanup unsafe: keep old worktree and continue from a new worktree"
+      ],
+      "expected_outcome": [
+        "assistant explains raw task steering and repo-level learned-patterns separately",
+        "assistant persists decisions to ADR or adopted learned-patterns before cleanup",
+        "assistant starts next implementation from latest default branch in a new worktree",
+        "assistant keeps unsafe old worktree instead of deleting it"
+      ],
+      "judge_required": false,
+      "human_ux_rubric": ["next_action_is_clear", "cleanup_risk_is_visible", "storage_destination_is_understandable"],
+      "safety_rubric": ["no_raw_task_steering_on_main", "no_unadopted_learned_patterns_creation", "new_worktree_for_followup"],
+      "failure_modes": ["raw steering を main に commit する", "learned-patterns を無条件に作る", "古い worktree で次実装を始める"],
+      "checklist": [
+        {
+          "id": "SRET-1",
+          "critical": true,
+          "description": "Raw task steering and repo-level learned-patterns are separated.",
+          "target": "assistant",
+          "kind": "contains_all",
+          "patterns": ["raw task steering", "branch-only steering", "repo-level learned-patterns", "raw task steering ではない"]
+        },
+        {
+          "id": "SRET-2",
+          "critical": true,
+          "description": "Raw task steering is not committed to main.",
+          "target": "assistant",
+          "kind": "contains_all",
+          "patterns": ["main には raw task `.steering/<task>/` を含めない", "PR / main の commit 対象にしない"]
+        },
+        {
+          "id": "SRET-2B",
+          "critical": true,
+          "description": "Branch-only transfer allows only necessary task branch handoff and requires removal before PR/main.",
+          "target": "assistant",
+          "kind": "contains_all",
+          "patterns": ["必要な場合だけ", "一時 commit / push", "git rm -r .steering/<task>/", "net-zero"]
+        },
+        {
+          "id": "SRET-2C",
+          "critical": true,
+          "description": "Branch-only transfer warns about branch history risk and cleanup expectations.",
+          "target": "assistant",
+          "kind": "contains_all",
+          "patterns": ["branch 履歴", "squash merge", "merge 後 branch delete"]
+        },
+        {
+          "id": "SRET-3",
+          "critical": true,
+          "description": "Learned-patterns adoption is explicit and does not create .steering blindly.",
+          "target": "assistant",
+          "kind": "contains_all",
+          "patterns": ["採用済み判定", "origin/<default-branch>", ".gdd-config.md", "新規に `docs/learned-patterns.md` を作らない"]
+        },
+        {
+          "id": "SRET-4",
+          "critical": true,
+          "description": "Post-merge order and unsafe cleanup behavior are explicit.",
+          "target": "assistant",
+          "kind": "contains_all",
+          "patterns": ["read-only verification → persistence → cleanup → new worktree", "cleanup が unsafe", "旧 worktree は保持", "latest default branch"]
+        }
+      ]
+    }
+  ]
+}

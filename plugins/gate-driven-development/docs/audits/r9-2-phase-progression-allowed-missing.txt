@@ -1,0 +1,13 @@
+# 承認済みの意図的削除（T-3 / references/phase-progression.md）
+# 逐語照合レビュー handoff/t-3-collation.md flag 3 で開示・妥当と判定済み。
+#
+# 原本 L556-560 の例「feat-A → hotfix-1 → hotfix-2」で示されていた 2 行。
+# この例の Origin Steering 値は prefix なしの素の path であり、同じ節の 4 行下で
+# 定義される value grammar（local: / snapshot: / git-ref: / unresolved: の 4 形式 +
+# Origin Resolution Status 併記）を満たしていない。規範側と矛盾する例のため削除。
+# 併記規約の規範 bullet（Parent Hotfix: <直前 hotfix steering path> を併記する）は
+# 蒸留版 L543 に現存し、蒸留版 L561-566 の hotfix-3 の例が local: prefix +
+# Origin Resolution Status + Parent Hotfix + Abandoned Hotfix Attempts の完全形で
+# 上位互換。契約損失なし。
+       Origin Steering: .steering/20260301-feat-A/
+       Parent Hotfix: .steering/hotfix-1-2026-04-15/

@@ -1,0 +1,29 @@
+{
+  "case_id": "active-gdd-pr-followup-vs-superpowers",
+  "conversation": [
+    {
+      "role": "assistant",
+      "text": "PR #123 を作成しました。レビュー指摘が返ったら gdd-pr-review-followup で対応します。"
+    },
+    {
+      "role": "user",
+      "text": "PR後に修正指示。Terraform plan policy の実行経路を Python 独自チェックから OPA/Conftest に寄せて"
+    }
+  ],
+  "context": {
+    "active_gdd_marker": true,
+    "superpowers_enabled": true,
+    "pr_exists": true,
+    "review_feedback": true
+  },
+  "expected": {
+    "primary": "gdd",
+    "route_contains": "gate-driven-development:gdd-pr-review-followup",
+    "must_not_route": [
+      "superpowers:receiving-code-review",
+      "superpowers:test-driven-development",
+      "superpowers:executing-plans"
+    ],
+    "requires_status_or_resume": false
+  }
+}

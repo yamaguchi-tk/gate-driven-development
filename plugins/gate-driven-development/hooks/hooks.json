@@ -1,0 +1,251 @@
+{
+  "description": "Guard .steering/** writes, keep active /gdd-dev runs alive until a terminal or mandatory-stop state is reached, inject GDD guidance on session start, write a git pre-push hook (config-based, via $CLAUDE_ENV_FILE; log-only, never blocks) that logs, for a push to a github.com remote branch with an open PR, whether an allowlisted reviewer Agent was launched after the tip commit's second and finished successfully, keep Current Task in context on each user message, and re-inject task context before file writes. The Stop hook also pushes back once, regardless of active-GDD status, when the session that wrote a merge-wait declaration (.claude/gdd-merge-intent.json) stops while the PR is OPEN, its last `gh pr merge` of that PR after the declaration was not stopped before running (an is_error result that does not start with `Exit code`, including an empty one, e.g. a hook or auto mode classifier denial; a `gh pr merge` whose PR cannot be identified by number or URL counts as that PR), the pushback text can be encoded as UTF-8 (the text shows the absolute path of the declaration it reads, or .claude/gdd-merge-intent.json when that path has control characters or surrogates), and no background Bash or Agent launched in the last 130 minutes is still running (gh pr view; the pushback gets 3 seconds in total, within 6 seconds of loading) or when the last message promises to merge after CI without a declaration, and pushes back once on a human-check-waiting stop when the bound steering worklog.md has a pre-answer (事前回答:) row. A second Stop hook (request-diff) blocks, regardless of active-GDD status, when the last human-check-waiting message after the last human message has an unreadable `依頼との差` field (a value other than exactly `なし` or `あり: <item>`, or the word outside the field line), or a marker without the tag line right before it or with an unreadable request-diff, so the main session re-presents the whole check before the user answers (at most 2 blocks per human turn, then a systemMessage; it lets the stop through on an exception or an unreadable transcript); otherwise it only shows the request-diff reader's result as a systemMessage. PreToolUse has seventeen hooks: (1) steering-write-hook validates .steering/ writes (personal email, absolute path rejection), (2) plan-reread-hook injects Current Task + AC context during build, (3) block-plan-mode-hook prevents EnterPlanMode / SwitchMode(plan) during active /gdd-dev sessions, (4) block-enter-worktree-hook prevents host-native EnterWorktree during active /gdd-dev sessions (worktree creation is routed through the gdd-using-git-worktrees skill instead), (5) active-gdd-skill-gate blocks standalone superpowers planning/execution skills during active /gdd-dev sessions, (6) agent-dispatch-model-gate warns (additionalContext, does not block) when an Agent (subagent) dispatch during an active /gdd-dev session has an unspecified or inappropriate model for its GDD phase — phase is read from state.md Resume From (planning) or tasklist.md Next Action (build); judgment material is limited to closed-vocabulary fields, never the free-text description, (7) pre-pr-gate does not block gh pr create; during active /gdd-dev sessions it collects every missing completion guard into one after-the-fact notice (additionalContext and systemMessage) and one would-block log line, (8) worktree-command-guard blocks destructive git worktree/branch commands run from the wrong location. (9) pre-push-gate does not block git push; during active /gdd-dev sessions without a matching self-review evidence field it returns an after-the-fact notice and logs a would-block line (GDD_SKIP_PRE_PUSH_GATE=1 skips the check, the notice, and the log line). (10) merge-gate does not block `gh pr merge`; during active /gdd-dev sessions it returns an after-the-fact notice and logs a would-block line when re-fetch evidence, review-wait/independent-review, or explicit merge approval conditions are not satisfied (no per-command escape hatch; only the global kill switch, logged). (11) review-followup-nudge-hook detects git push to a branch that already has a PR (via `gh pr view`, short-TTL cached) and injects (not blocks) a one-line additionalContext pointer to the `pr-review-followup` skill; fires regardless of active-GDD status (the active-only pre-push-gate silently no-ops on session-mismatch/opt-out/unresolved-steering far more often than it would block), but honors the same kill switch and GDD_SKIP_PRE_PUSH_GATE opt-out. gh failures/timeouts are logged as undeterminable, never misread as no-PR. (12) gate-skill-dispatch-nudge-hook injects (not blocks) an additionalContext pointer to the subagent-dispatch.md Template when the gdd-implementation-gating or gdd-completion-check skill is invoked through the Skill tool, so the main session dispatches gdd-formal-gate-runner instead of running the gate inline; fires regardless of active-GDD status and honors the kill switch. (13) background-dispatch-gate denies a synchronous gdd-formal-gate-runner Agent dispatch from the main session (no agent_id in the payload) during active /gdd-dev sessions, so it runs with run_in_background: true and a deadline timer that the Stop hook's wait watchdog can check; calls inside subagents and payloads that cannot be read are allowed (non-JSON ones are logged). (14) wait-loop-gate denies a run_in_background Bash whose command is a wait loop (until/while/for followed by sleep, --watch, or gh run watch) and points to scripts/wait-until.py, which has a required deadline and exit codes that separate met, not yet, broken condition, and timeout; fires regardless of active-GDD status and inside subagents, allows a bare `sleep N` deadline timer and payloads that cannot be read (non-JSON ones are logged under ~/.claude/.gdd-hook-state/), and honors the kill switch. UserPromptExpansion also blocks direct /superpowers planning/execution skill invocations during active /gdd-dev sessions. (15) main-model-gate denies, on every call and with no state, when the model of the reply making the call is Sonnet or Haiku: the gdd-dev or gdd-resume Skill call, and a Write, Edit or MultiEdit of .claude/gdd-dev.local.md that starts a run by hand (any write while the file on disk is not active, read like the Stop hook reads it: a missing, unreadable or undeterminable file counts as not active, and the content written is not looked at; updates while the frontmatter on disk says active: true are not judged, and Bash writes are not judged); scripts/setup-gdd-loop.sh runs the same judgment itself (main_model_gate.py --setup) and exits 1, so running the setup in any shell form is judged and merely reading it is not. The reply's model is the main assistant line with the payload tool_use_id (hook only), else the last main assistant line after the last human turn boundary, reading the last 4 MiB of the transcript and rereading briefly within a 3-second deadline (the transcript is written asynchronously); when neither appears it falls back to the last model signal in the main transcript (model attachment, /model output, or main assistant message.model) and adds a hint to resend after switching models on screen. Each judgment logs its stage to main-model-gate.log in the state dir. A directly typed /gdd-dev (UserPromptExpansion) is not judged, because before the reply the last signal is the previous turn's model. It allows when no signal is found (with a notice in Claude Code), and GDD_ALLOW_NON_OPUS_MAIN=1 or the kill switch turns it off; the setup reads that opt-out only from the env of the settings files (user, and .claude/settings.json and settings.local.json in the cwd and its parents), never from the process environment, and decides the runtime from the process tree (or the session id), never from GDD_RUNTIME. The shell wrapper starts python only when the payload contains gdd-dev.local.md, Skill, Stop or SessionStart. On SessionStart (payload model only) and Stop (after the reply, so the last main assistant message.model is the model that just replied) the same hook shows a one-time notice per session when the main model is Sonnet or Haiku. (16) request-capture-hook, when gdd-request-code-crosscheck is dispatched with exactly one absolute .steering/<task>/request.md path whose steering has state.md and that file does not exist yet, creates it with a section copied from the main transcript (human-origin user lines, queued human lines, typed commands, AskUserQuestion answers, each preceded by the assistant text since the previous one, labeled as context) from after the last done/cancelled stop marker up to the /gdd-dev invocation that created the steering (the last one at or before the state.md Started At), plus the user lines after that invocation below the section, replacing the values the steering-write guard rejects. In Claude Code the runner writes its own copy to request-notes.md instead of request.md. It copies only when the state.md Created In Session (written by the runner that created the steering) equals the payload session_id; otherwise, or when the invocation or the user lines are missing or Started At is unreadable, it creates a request.md holding a not-copied marker, the reason and any user lines after the invocation (readers treat it as having no original request), and shows the reason as a systemMessage. It never rewrites an existing request.md (it only reports by systemMessage when one exists and state.md has no Created In Session) (it links a temporary file, so it never overwrites and never leaves a partial file), creates nothing on an exception, and never blocks. (17) request-diff-approval-gate denies, without reading the presentation or starting python, a Bash command that contains both `Human Check Status` and `approved`, and points to Edit/Write, where the steering-write-hook checks the last human-check-waiting presentation: every line with `依頼との差` must be the one field form with the value exactly `なし` (`あり: <item>` is read but not approved), and the tag line right before each marker must carry request-diff with only none values (the decision and the count come from the tag alone) (earlier presentations are not compared; each allowed approval is logged in request-diff-approval.log for later counting). It allows only commands without both words and an active kill switch; it denies when kill-switch.sh cannot be read. StopFailure fires when a turn ends due to an API error (Stop does not fire in that case) and persists a single failure record for the next SessionStart to report; Notification fires on idle/permission waits for local OS notification only. Neither uses decision control.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-user-prompt-submit-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptExpansion": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-active-gdd-skill-expansion-gate-hook.sh\"",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-session-start-hook.sh\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-push-review-env-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-main-model-gate-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-pre-compact-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-gdd-stop-hook.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-request-diff-hook.sh\"",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-display-marker-hook.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-main-model-gate-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-stop-failure-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-notification-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|ApplyPatch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-steering-write-hook.sh\"",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit|ApplyPatch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-pre-tool-use-plan-reread-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "EnterPlanMode|SwitchMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-block-plan-mode-hook.sh\"",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "EnterWorktree",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-block-enter-worktree-hook.sh\"",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-active-gdd-skill-gate-hook.sh\"",
+            "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-gate-skill-dispatch-nudge-hook.sh\"",
+            "timeout": 3
+          }
+        ]
+      },
+      {
+        "matcher": "Skill|Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-main-model-gate-hook.sh\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-agent-dispatch-model-gate-hook.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-background-dispatch-gate-hook.sh\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-request-capture-hook.sh\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-pre-pr-gate-hook.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-worktree-command-guard.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-pre-push-gate-hook.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-merge-gate-hook.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-review-followup-nudge-hook.sh\"",
+            "timeout": 8
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-wait-loop-gate-hook.sh\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/run-request-diff-approval-gate-hook.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

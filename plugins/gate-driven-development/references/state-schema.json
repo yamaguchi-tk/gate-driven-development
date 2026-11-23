@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "owner": "gate-driven-development state machine",
+  "phase_status": {
+    "Requirements Review Status": {
+      "allowed": ["pending", "in_review", "changes_requested", "approved"],
+      "phase_level": true,
+      "waived_allowed": false
+    },
+    "Design Review Status": {
+      "allowed": ["pending", "in_review", "changes_requested", "approved"],
+      "phase_level": true,
+      "waived_allowed": false
+    },
+    "Human Check Status": {
+      "allowed": ["pending", "changes_requested", "approved"],
+      "phase_level": true,
+      "waived_allowed": false
+    }
+  },
+  "status_line_format": {
+    "shape": "<status> | evidence: <id> | updated_by: <skill-name> | updated_at: <ISO 8601 timestamp>",
+    "required_parts": ["status", "evidence", "updated_by", "updated_at"]
+  },
+  "prechecks": {
+    "build_phase": {
+      "standard": [
+        {"field": "Requirements Review Status", "status": "approved"},
+        {"field": "Design Review Status", "status": "approved"},
+        {"field": "Human Check Status", "status": "approved"}
+      ],
+      "quick (standard)": [
+        {"field": "Requirements Review Status", "status": "approved"},
+        {"field": "Design Review Status", "status": "approved"},
+        {"field": "Human Check Status", "status": "approved"}
+      ],
+      "quick (express → standard)": [
+        {"field": "Requirements Review Status", "status": "approved"},
+        {"field": "Design Review Status", "status": "approved"},
+        {"field": "Human Check Status", "status": "approved"}
+      ],
+      "quick (express)": [
+        {"field": "Requirements Review Status", "status": "approved"},
+        {"field": "Design Review Status", "status": "approved"},
+        {"field": "Human Check Status", "status": "approved"}
+      ]
+    },
+    "build_phase_default": [
+      {"field": "Requirements Review Status", "status": "approved"},
+      {"field": "Design Review Status", "status": "approved"},
+      {"field": "Human Check Status", "status": "approved"}
+    ],
+    "build_phase_unreachable": ["trivial"],
+    "build_phase_default_note": "prechecks.build_phase に列挙が無い Task Size 値（未列挙の将来値を含む）はこれにフォールバックする。precheck 側では本フィールドが新設だが、hooks/scripts/run-pre-push-gate-hook.sh・run-pre-pr-gate-hook.sh・validate-steering-write.py が既に未知の Task Size を standard 扱いにフォールバックしている既存挙動に揃えたもの。ただし build_phase_unreachable に列挙された値（`trivial`）は対象外（references/phase-gate-prechecks.md の Template A/B が『この skill に到達しないはず（routing 誤り）』と定める値で、standard 扱いのフォールバックに落とすと routing 誤りを隠す）"
+  },
+  "routing_source": {
+    "planning": "state.md: Resume From",
+    "build": "tasklist.md: Next Action (fallback: state.md: Next Action)",
+    "terminal": "tasklist.md: Next Action or state.md: Resume From"
+  },
+  "gate_field_delimiter": {
+    "canonical": "=",
+    "accepted_on_read": ["=", ":"],
+    "note": "書き手は `=` を使う。読み手（gdd_extract_doc_field / gdd_check_3field_gate）は両方を受け付ける。読み手だけ厳格にすると多数派を静かに取りこぼす"
+  },
+  "route_in_progress_reader": {
+    "single_source": "hooks/scripts/lib/tasklist_parse.py:select_route_in_progress",
+    "shell_entry_point": "gdd_extract_route_in_progress (hooks/scripts/lib/detect-steering.sh)",
+    "value_selection": ["fence 剥がし", "行頭アンカー", "正準形（`:`）を旧等号形（`=`）より優先", "同形が複数あれば最終行", "enum トークンだけを値にする"],
+    "note": "`Route In Progress` は汎用 reader `gdd_extract_doc_field` で読まない。汎用 reader は最初の一致で `exit` するため、人間が `- Route In Progress: none | reason: 解除` を追記して route を解除しても古い route を返し続ける（session-start / user-prompt-submit が解除済み route を注入する誘導ズレ。2026-09-03 に確かめると、reader の間で結果が割れる形がいくつもあった）。shell 側は awk へ規則を書き写さず python の単一正本へ委譲する。正本テストは tests/test_route_in_progress_reader_contract.py",
+    "python3_absent_fallback": "汎用 reader へ退避する。この状態では select_route_in_progress を持つ python reader（done guard / telemetry）自体が起動できないため、値が割れる相手が存在しない"
+  },
+  "canonical_line_form": {
+    "shape": "<field><delimiter> <value>",
+    "allowed_line_prefix": ["", "- "],
+    "indented_lines_are_not_fields": true,
+    "note": "canonical field 行は**行頭から始まる**。markdown bullet marker は `- ` 1 個まで許容する。インデントされた行（入れ子 bullet の履歴メモ、コードブロック内の記入例）は field として読まない。読み手・書き手の全実装がこの規約を共有する: gdd_extract_doc_field / validate-steering-write.py / gdd_task_binding.py / setup-gdd-loop.sh / collect-gdd-telemetry.py / tasklist_parse.select_route_in_progress（PreCompact・SessionStart は routing field を gdd_extract_doc_field で読む）。正本テストは tests/test_canonical_field_line_anchoring_contract.py",
+    "line_prefix_exceptions": [
+      {
+        "reader": "scripts/setup-gdd-loop.sh:normalize_line",
+        "accepts": ["-", "*", "+"],
+        "reason": "本 schema の allowed_line_prefix（`\"\"` / `- `）より広い。値 reader 4 本（gdd_extract_doc_field / gdd_task_binding._field / validate-steering-write.state_field_value / collect-gdd-telemetry.extract_field）は `- ` のみを受理する。tests/test_canonical_field_line_anchoring_contract.py が `* Next Action: done` を loop_parse_field の受理形として固定しているため、揃えるには既存契約テストの期待値変更が要る。PR #35 では触っていない",
+        "remaining_asymmetry": "`* Next Action: done` のみを持つ state.md を loop reader は terminal と判定し、値 reader 4 本は field 不在と判定する（`RESUME_FROM_PATTERN` は `Resume From` 専用で `Next Action` を読まないため、この field ではそもそも関与しない）。`Resume From` については PR #35 で `gdd_stop_hook` を値 reader 4 本と同じ `- ` のみへ揃えたので、`* Resume From: x` は stop hook でも読まれなくなった。loop reader との非対称自体は本 PR 以前から存在し、PR #35 が新規に持ち込んだものではない"
+      }
+    ],
+    "history_notes": "過去の値に言及する履歴・経緯メモは**入れ子 bullet（先頭 2 スペース以上のインデント）**で書く。行頭に書くと canonical field と区別できず、tasklist.md 本文の履歴が `Next Action` の現在値として読まれる（2026-08-30 に gh pr create が block された経路）",
+    "value_less_line_skip": {
+      "rule": "区切り文字の後ろが（各実装が既に行っている trim + backtick 除去まで適用して）trim後に空の canonical 行は現在値ではない。走査を継続して次の canonical 行を見る。行の選択規則は最初の値付き一致であり、最終行採択にはしない。",
+      "applies_to_rule": "hook / skill / command が runtime で呼ぶ経路にあり、state.md の canonical field を共通受理形（`- <Field>: <値>` / `<Field>: <値>`）で読む reader。数え上げは適用範囲の定義に使わない。",
+      "applies_to_known": [
+        "hooks/scripts/lib/detect-steering.sh:gdd_extract_doc_field",
+        "scripts/gdd_task_binding.py:_field",
+        "scripts/setup-gdd-loop.sh:parse_field",
+        "hooks/scripts/lib/state_fields.py:state_field_value",
+        "scripts/collect-gdd-telemetry.py:extract_field",
+        "hooks/scripts/gdd_stop_hook.py:resume_from_value"
+      ],
+      "known_list_is_not_exhaustive": true,
+      "excluded_known": [
+        {"reader": "hooks/scripts/run-session-start-hook.sh:QUICK_REBOOT の Task Size 抽出", "reason": "bare 形限定。読む file が requirements.md", "remaining_asymmetry": "QUICK_REBOOT の Size 表示が欠けるだけ。gate ではない"},
+        {"reader": "hooks/scripts/lib/tasklist_parse.py:select_route_in_progress", "reason": "Route In Progress 専用の最終行採択 reader", "remaining_asymmetry": "変更なし"},
+        {"reader": "hooks/scripts/lib/detect-steering.sh:gdd_extract_route_in_progress の python3 不在時フォールバック", "reason": "独立した reader ではなく `gdd_extract_doc_field` への委譲であるため、空値行を飛ばす規則（本節の `rule`）を**実装するのではなく継承する**。この経路にこの規則を書き足す必要はない（実測: 空値行 + 値付き 2 行の state.md に対し python3 不在時も空値行を飛ばして最初の値付き値を返す）", "remaining_asymmetry": "空値行を飛ばす規則の次元では非対称なし。残るのはこの規則と無関係な既存の限界で、python3 が真に不在の環境では**最終行採択が再現されない**（本体は最後の値付き行、フォールバックは最初の値付き行を返す）。fence 追跡込みの選択規則をこのローカル関数へ複製すると規約が 2 実装に散るため 0.38.4 で意図的に実装しないと判断済み。固定テストは tests/test_route_in_progress_reader_contract.py:test_multiple_matching_lines_return_the_first_not_the_last"},
+        {"reader": "scripts/lint-resume-integrity.py / lint-worktree-provenance.py / lint-state-tasklist-continuity.py / find-stale-steerings.sh:extract_field", "reason": "runtime 非使用 + 行頭アンカーが別規約", "remaining_asymmetry": "replay fixture 上の lint 判定が変わらないだけ"},
+        {"reader": "hooks/scripts/lib/handoff_summary.py:_is_terminal_tasklist（tasklist.md の `Next Action=` 部分文字列 reader） / scripts/collect-gdd-telemetry.py:parse_task_metrics（`Task Size` の直接 re.search）", "reason": "行頭アンカーを持たない別規約", "remaining_asymmetry": "terminal 除外判定 / telemetry 集計が変わらないだけ。gate ではない"}
+      ],
+      "whitespace_class_exceptions": "空白の定義が実装間で割れる。awk（`gdd_extract_doc_field`）の `[[:space:]]` は ASCII の空白類しか落とさないが、python 5 実装の `str.strip()` は Unicode 空白を落とす。実測: 値部が全角空白 U+3000 だけの canonical 行 + 後続の値付き行で、awk は U+3000 自体を返し python 5 実装は後続行の値を返す。空値行を飛ばす規則とは別次元（空白文字クラスのロケール / Unicode 依存）で、`origin/main` でも同じく割れているため本 PR の退行ではない。追跡は別タスク。",
+      "backtick_pair_exceptions": [
+        {
+          "reader": "hooks/scripts/gdd_stop_hook.py:RESUME_FROM_PATTERN",
+          "form": "`- Resume From: `` <値>` のように `` ` `` 対の**後ろに値が続く**行",
+          "behavior": "末尾 group `` (`.*)?$ `` が最初のバッククォート以降を丸ごと吸うため group(1) が `` ` `` だけになり、空値行を飛ばす規則の空判定でこの行が飛ばされて**後続行の値**が返る。値 reader 5 本は同じ行を値として読む",
+          "introduced_by_pr35": false,
+          "note": "旧実装もこの行を `` ` `` として返しており他 5 本と割れていた（PR #35 の退行ではない）。ただし PR #35 の受け入れ条件「揃えた実装が同一の一致を返す」はこの形では成立しない。揃えるには RESUME_FROM_PATTERN の backtick 扱いを他 5 本（値側だけ strip)へ寄せる必要があり本 PR のスコープ外。固定テスト: tests/test_state_field_value_less_line_contract.py::BacktickPairThenValueAsymmetryTests"
+        }
+      ],
+      "primary_test": "tests/test_state_field_value_less_line_contract.py"
+    }
+  },
+  "retired_hook_fields": {
+    "fields": ["Status", "CompactSessionId", "CompactSource", "AutoCycleCount", "PausedAt", "CompactTranscriptOffset"],
+    "note": "compact 自動復帰（2026-09-28 に廃止）の印。hook は書きも読みもしない。既存の state.md に残っていても害は無く、消してもよい。skill / LLM は書かない"
+  }
+}

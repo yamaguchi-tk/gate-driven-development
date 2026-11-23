@@ -1,0 +1,9 @@
+{
+  "runner": "lint-state-tasklist-continuity",
+  "steering_dir": ".steering/20260607-stale-tasklist",
+  "expected_status": "fail",
+  "expected_reason_contains": [
+    "Requirements Revision mismatch",
+    "Design Revision mismatch"
+  ]
+}

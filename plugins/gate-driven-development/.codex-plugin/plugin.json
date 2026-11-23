@@ -1,0 +1,41 @@
+{
+  "name": "gate-driven-development",
+  "version": "0.44.0",
+  "description": "方向性を決めたら AI が完走する軽量オーケストレーター。要件整理→人間確認→設計→TDD→実装→レビュー→PR を自動ゲート付きで一気通貫。中断・再開も state machine で正確にルーティング。",
+  "author": {
+    "name": "yamaguchi-tk",
+    "email": "377032+yamaguchi-tk@users.noreply.github.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "steering",
+    "requirements",
+    "design",
+    "tdd",
+    "worktree",
+    "review"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Gate-Driven Development",
+    "shortDescription": "Requirements, design, TDD, review, and PR workflow gates",
+    "longDescription": "方向性を決めたら AI が完走する軽量オーケストレーター。要件整理→人間確認→設計→TDD→実装→レビュー→PR を自動ゲート付きで一気通貫。中断・再開も state machine で正確にルーティング。",
+    "developerName": "yamaguchi-tk",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "gdd-dev: Add a small feature with requirements and tests",
+      "GDDでこの変更を要件整理から進めたい",
+      "gdd-status"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  },
+  "commands": "./commands/"
+}

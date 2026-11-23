@@ -1,0 +1,28 @@
+{
+  "case_id": "active-gdd-planning-amendment-followup",
+  "conversation": [
+    {
+      "role": "assistant",
+      "text": "requirements.md の草案を作成しました。human-check 承認前なので、この時点の計画変更は要件差分として扱います。"
+    },
+    {
+      "role": "user",
+      "text": "計画途中でこれも追加して。承認前だけど、完了条件に監査ログの確認も入れてほしい"
+    }
+  ],
+  "context": {
+    "active_gdd_marker": true,
+    "superpowers_enabled": true,
+    "planning_before_approval": true
+  },
+  "expected": {
+    "primary": "gdd",
+    "route_contains": "gate-driven-development:gdd-requirements-amendment",
+    "must_not_route": [
+      "gate-driven-development:gdd-status",
+      "superpowers:writing-plans",
+      "superpowers:executing-plans"
+    ],
+    "requires_status_or_resume": false
+  }
+}
